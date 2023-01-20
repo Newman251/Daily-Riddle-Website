@@ -39,11 +39,6 @@ color: black;
 cursor: pointer;
 `;
 
-// Styled div for background
-const Background = styled.div`
-background: papayawhip;
-`;
-
 const [inputValue, setInputValue] = useState();
 const [isCorrect, setIsCorrect] = useState();
 const correctAnswerOne = "Fire";
