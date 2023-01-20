@@ -72,7 +72,7 @@ if (inputValue === correctAnswerOne || inputValue === correctAnswerTwo) {
     // Create a div with class name App which contains a text box which you write to
     // and a button which you click to submit the text box contents
     // Add a text box above the button
-    <Background className="App">
+    <div className="App">
       <p>Time Remaining: {hours}:{minutes}:{seconds}</p>
         <Title>Daily Riddle</Title>
         {!isCorrect ? ( <><><text id="text">"I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me... What am I?"</text><p><input
@@ -89,7 +89,7 @@ if (inputValue === correctAnswerOne || inputValue === correctAnswerTwo) {
           borderRadius: '3px'
         }} /></p><Submit onClick={checkAnswer}>Check</Submit></><p>Keep Guessing!</p></>) : <Correct /> }
       
-    </Background>
+    </div>
   );
 }
 
