@@ -39,6 +39,11 @@ color: black;
 cursor: pointer;
 `;
 
+// Styled div for background
+const Background = styled.div`
+background: papayawhip;
+`;
+
 const [inputValue, setInputValue] = useState();
 const [isCorrect, setIsCorrect] = useState();
 const correctAnswerOne = "Fire";
@@ -67,10 +72,10 @@ if (inputValue === correctAnswerOne || inputValue === correctAnswerTwo) {
     // Create a div with class name App which contains a text box which you write to
     // and a button which you click to submit the text box contents
     // Add a text box above the button
-    <div className="App">
+    <Background className="App">
       <p>Time Remaining: {hours}:{minutes}:{seconds}</p>
         <Title>Daily Riddle</Title>
-        {!isCorrect ? ( <><><text id="text">"I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?"</text><p><input
+        {!isCorrect ? ( <><><text id="text">"I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me... What am I?"</text><p><input
         type="text"
         value={inputValue}
         onChange={handleChange}
@@ -84,7 +89,7 @@ if (inputValue === correctAnswerOne || inputValue === correctAnswerTwo) {
           borderRadius: '3px'
         }} /></p><Submit onClick={checkAnswer}>Check</Submit></><p>Keep Guessing!</p></>) : <Correct /> }
       
-    </div>
+    </Background>
   );
 }
 
