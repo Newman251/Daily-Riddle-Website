@@ -41,7 +41,7 @@ const App = () =>
         setCurrentAnswer(nextAnswer);
         setTimeLeft(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft); // reset the timer
       }
-    }, [timeLeft, nextRiddle]);
+    }, [timeLeft, hoursLeft, minutesLeft, secondsLeft, nextRiddle, nextAnswer]);
 
     // Style submit button to be red curve the edges
 const Submit = styled.button`
