@@ -31,6 +31,7 @@ function Correct() {
     if (navigator.share) {
       navigator.share({
         title: '❓ I got todays riddle, can you ❓',
+        text: 'Check out this website',
         url: currentUrl,
       })
         .then(() => console.log('Successful share'))
