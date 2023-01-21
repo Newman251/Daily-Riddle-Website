@@ -15,9 +15,9 @@ const App = () =>
     const minutesLeft = 60 - currentMinute - 1;
     const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
     const [currentRiddle, setCurrentRiddle] = useState("What is able to travel around the globe, but stays in a corner the whole time?");
-    const [nextRiddle, setNextRiddle] = useState("What word becomes shorter when you add two letters to it?");
+    const [nextRiddle] = useState("What word becomes shorter when you add two letters to it?");
     const [currentAnswer, setCurrentAnswer] = useState("stamp");
-    const [nextAnswer, setNextAnswer] = useState("short");
+    const [nextAnswer] = useState("short");
 
     useEffect(() => {
         const intervalId = setInterval(() => {
