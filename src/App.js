@@ -8,8 +8,16 @@ const App = () =>
 
   const currentDate = new Date();
     const currentHour = currentDate.getHours();
-    const hoursLeft = 24 - currentHour;
-    const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60);
+    const currentMinute = currentDate.getMinutes();	
+    const currentSecond = currentDate.getSeconds();
+    const hoursLeft = 24 - currentHour - 1;
+    const secondsLeft = 60 - currentSecond;
+    const minutesLeft = 60 - currentMinute - 1;
+    const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
+    const [currentRiddle, setCurrentRiddle] = useState("What is able to travel around the globe, but stays in a corner the whole time?");
+    const [nextRiddle, setNextRiddle] = useState("What word becomes shorter when you add two letters to it?");
+    const [currentAnswer, setCurrentAnswer] = useState("stamp");
+    const [nextAnswer, setNextAnswer] = useState("short");
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -27,6 +35,14 @@ const App = () =>
     const minutes = Math.floor(timeLeft / 60) % 60;
     const hours = Math.floor(timeLeft / 60 / 60);
 
+    useEffect(() => {
+      if (timeLeft === 0) {
+        setCurrentRiddle(nextRiddle);
+        setCurrentAnswer(nextAnswer);
+        setTimeLeft(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft); // reset the timer
+      }
+    }, [secondsLeft, nextRiddle]);
+
     // Style submit button to be red curve the edges
 const Submit = styled.button`
 padding: 0.25em 1em;
@@ -41,19 +57,16 @@ cursor: pointer;
 
 const [inputValue, setInputValue] = useState();
 const [isCorrect, setIsCorrect] = useState();
-const correctAnswerOne = "Fire";
-const correctAnswerTwo = "fire";
-
-//   const navigate = useNavigate();
 
 const handleChange = (event) => {
 setInputValue(event.target.value);
 }
 
 const checkAnswer = (event) => {
-if (inputValue === correctAnswerOne || inputValue === correctAnswerTwo) {
-  setIsCorrect(true);
-}
+  event.preventDefault();
+  if (inputValue.toLowerCase() === currentAnswer.toLowerCase()) {
+    setIsCorrect(true);
+  }
 }
 
   // Style background to be green
@@ -63,14 +76,31 @@ if (inputValue === correctAnswerOne || inputValue === correctAnswerTwo) {
     color: palevioletred;
 `;
 
+// Styple the timer to be fancier make it bold
+const Timer = styled.p`
+  font-family: "museo", Helvetica Neue, Helvetica, sans-serif;  
+  font-size: 1.2em;
+  text-align: center;
+  color: black;
+`;
+
+// Change the text font of the riddle to be fancier
+const Text = styled.p`
+  @font-face {
+    font-family: 'Raleway', sans-serif;
+    src: url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
+  }
+  `;
+  
+ 
   return (
     // Create a div with class name App which contains a text box which you write to
     // and a button which you click to submit the text box contents
     // Add a text box above the button
     <div className="App">
-      <p>Time Remaining: {hours}:{minutes}:{seconds}</p>
+      <Timer>Time unitil next riddle: {hours}:{minutes}:{seconds}</Timer>
         <Title>Daily Riddle</Title>
-        {!isCorrect ? ( <><><text id="text">"I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me... What am I?"</text><p><input
+        {!isCorrect ? ( <><><Text id="text"><i>{currentRiddle}</i></Text><p><input
         type="text"
         value={inputValue}
         onChange={handleChange}

@@ -30,8 +30,8 @@ function Correct() {
   const shareLink = () => {
     if (navigator.share) {
       navigator.share({
-        title: '❓ I got todays riddle, can you ❓',
-        text: 'Check out this website',
+        title: 'Daily Riddles',
+        text: 'U+2753 I got todays riddle, can you U+2753',
         url: currentUrl,
       })
         .then(() => console.log('Successful share'))
