@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 function Correct() {
-  const currentUrl = window.location.href;
+  const currentUrl = 'http://wriddle.org/';
 
   const StyledButton = styled.button`
     background-color: #4CAF50;
