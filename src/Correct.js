@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 function Correct() {
-  const currentUrl = 'http://wriddle.org/';
 
   const StyledButton = styled.button`
     background-color: #4CAF50;
@@ -33,7 +32,7 @@ function Correct() {
       navigator.share({
         title: 'Daily Riddles',
         text: '❓I got riddle #'+currentDay.toString()+', can you❓',
-        url: currentUrl,
+        url: "http://wriddle.org/",
       })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing:', error));
