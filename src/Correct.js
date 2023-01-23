@@ -25,13 +25,14 @@ function Correct() {
       color: palevioletred;
   `;
 
-
+  const currentDate = new Date();
+  const currentDay = currentDate.getDay();
 
   const shareLink = () => {
     if (navigator.share) {
       navigator.share({
         title: 'Daily Riddles',
-        text: '❓I got todays riddle, can you❓',
+        text: '❓I got riddle #'+currentDay.toString()+', can you❓',
         url: currentUrl,
       })
         .then(() => console.log('Successful share'))

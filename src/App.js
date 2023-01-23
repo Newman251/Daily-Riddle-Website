@@ -3,6 +3,24 @@ import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import Correct from './Correct';
 
+const riddles = [
+  { question: 'What kind of ship has two mates but no captain?', answer: 'relationship' },
+  { question: 'What is there one of in every corner and two of in every room?', answer: 'o' },
+  { question: 'Who can finish a book without finishing a sentence?', answer: 'prisoner' },
+  { question: 'I Start with M, end with X, and have a never-ending amount of letters. What am I?', answer: 'mailbox' },
+  { question: 'What is full of holes but still holds water?', answer: 'sponge' },
+  { question: 'What can you break, even if you never pick it up or touch it?', answer: 'promise' },
+  { question: 'I shave every day, but my beard stays the same. What am I?', answer: 'barber' },
+  { question: 'What word is always spelled wrong?', answer: 'wrong' },
+  { question: 'What kind of ship has two mates but no captain?', answer: 'relationship' },
+  { question: 'I go around all the places, cities, towns, and villages, but never come inside. What am I?', answer: 'street' },
+  { question: 'I am higher without a head. What am I?', answer: 'pillow' },
+  { question: 'What type of cheese is made backward?', answer: 'edam' },
+  { question: 'If you drop a yellow hat in the Red Sea, what does it become?', answer: 'wet' },
+  { question: 'Which word becomes shorter when you add 2 letters to it?', answer: 'short' },
+  { question: 'I can be cracked, I can be made. I can be told, I can be played. What am I?', answer: 'joke' }
+];
+
 const App = () => 
 {
 
@@ -13,11 +31,11 @@ const App = () =>
     const hoursLeft = 24 - currentHour - 1;
     const secondsLeft = 60 - currentSecond;
     const minutesLeft = 60 - currentMinute - 1;
+    const currentDay = currentDate.getDay();
     const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
-    const [currentRiddle, setCurrentRiddle] = useState("What is able to travel around the globe, but stays in a corner the whole time?");
-    const [nextRiddle] = useState("What word becomes shorter when you add two letters to it?");
-    const [currentAnswer, setCurrentAnswer] = useState("stamp");
-    const [nextAnswer] = useState("short");
+    const [currentRiddle] = useState(riddles[currentDay % riddles.length].question);
+    const [currentAnswer] = useState(riddles[currentDay % riddles.length].answer);
+
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -37,11 +55,9 @@ const App = () =>
 
     useEffect(() => {
       if (timeLeft === 0) {
-        setCurrentRiddle(nextRiddle);
-        setCurrentAnswer(nextAnswer);
         setTimeLeft(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft); // reset the timer
       }
-    }, [timeLeft, hoursLeft, minutesLeft, secondsLeft, nextRiddle, nextAnswer]);
+    }, [timeLeft, hoursLeft, minutesLeft, secondsLeft]);
 
     // Style submit button to be red curve the edges
 const Submit = styled.button`
@@ -67,6 +83,7 @@ const checkAnswer = (event) => {
   if (inputValue.toLowerCase() === currentAnswer.toLowerCase()) {
     setIsCorrect(true);
   }
+  setInputValue("");
 }
 
   // Style background to be green
