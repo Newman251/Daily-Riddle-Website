@@ -37,7 +37,7 @@ function Correct() {
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing:', error));
     } else {
-      prompt("Copy to clipboard: Ctrl+C, Enter", currentUrl);
+      prompt("Copy to clipboard: Ctrl+C, Enter", "http://wriddle.org/");
     }
   }
 
