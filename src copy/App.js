@@ -2,6 +2,7 @@ import './App.css';
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import Correct from './Correct';
+import axios from 'axios';
 
 const riddles = [
   { question: 'What kind of ship has two mates but no captain?', answer: 'relationship' },
@@ -36,7 +37,6 @@ const App = () =>
     const [currentRiddle] = useState(riddles[currentDay % riddles.length].question);
     const [currentAnswer] = useState(riddles[currentDay % riddles.length].answer);
 
-
     useEffect(() => {
         const intervalId = setInterval(() => {
             setTimeLeft(timeLeft - 1);
@@ -48,24 +48,6 @@ const App = () =>
 
         return () => clearInterval(intervalId);
     }, [timeLeft]);
-
-
-
-    // const ip = document.getElementById("ip-input").value;
-    // const guesses = document.getElementById("guesses-input").value;
-    // const data = { ip: ip, guesses: guesses }
-
-//     fetch("http://localhost:5000/api/ip", {
-//     method: "POST",
-//     body: JSON.stringify({ip: "153.2.2"}),
-//     headers: { "Content-Type": "application/json" }
-// })
-//     .then(res => res.json())
-//     .then(data => console.log(data))
-//     .catch(error => console.error(error))
-
-
-
 
     const seconds = timeLeft % 60;
     const minutes = Math.floor(timeLeft / 60) % 60;
@@ -104,6 +86,35 @@ const checkAnswer = (event) => {
   setInputValue("");
 }
 
+const [ip, setIp] = useState('');
+  const [guesses, setGuesses] = useState(0);
+
+  useEffect(() => {
+    if (window.location.hostname === 'localhost') {
+      setIp('127.0.0.1');
+    } else {
+      fetch('https://jsonip.com/')
+        .then(response => response.json())
+        .then(data => {
+          setIp(data.ip);
+        })
+        .catch(error => console.error(error));
+    }
+  }, []);
+
+  const handleGuess = () => {
+    setGuesses(guesses + 1);
+  }
+
+  useEffect(() => {
+    writeFile('./user_data.json', JSON.stringify({ ip, guesses }), (err) => {
+      if (err) throw err;
+      console.log('Data written to file');
+    });
+  }, [ip, guesses]);
+
+
+
   // Style background to be green
   const Title = styled.h1`
     font-size: 1.5em;
@@ -135,6 +146,7 @@ const Text = styled.p`
     <div className="App">
       <Timer>Time unitil next riddle: {hours}:{minutes}:{seconds}</Timer>
         <Title>Daily Riddle</Title>
+        <p>Your IP Address: {ip}</p>
         {!isCorrect ? ( <><><Text id="text"><i>{currentRiddle}</i></Text><p><input
         type="text"
         value={inputValue}
