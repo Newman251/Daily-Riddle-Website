@@ -2,6 +2,13 @@ import './App.css';
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import Correct from './Correct';
+// import { initializeApp } from "firebase/app";
+// import { getFirestore } from "firebase/firestore"; 
+// import UserList from './components/user-list.js'
+import { collection, addDoc } from "firebase/firestore";
+import { getDb } from "./services/db.mjs"
+import axios from 'axios';
+
 
 const riddles = [
   { question: 'What kind of ship has two mates but no captain?', answer: 'relationship' },
@@ -73,18 +80,62 @@ cursor: pointer;
 
 const [inputValue, setInputValue] = useState();
 const [isCorrect, setIsCorrect] = useState();
+// const [ newUser, setNewUser ] = useState("")
 
 const handleChange = (event) => {
 setInputValue(event.target.value);
 }
 
+// const findAll = async () => {
+//   const doc_refs = await getDocs(collection(getDb(), "users"))
+
+//   const res = []
+  
+
+//   doc_refs.forEach(users => {
+//       res.push({
+//           id: users.id, 
+//           ...users.data()
+//       })
+//   })
+
+//   return res
+// }
+
+//creating IP state
+const [myip,setIP] = useState('');
+    
+//creating function to load ip address from the API
+const getData = async()=>{
+    const res = await axios.get('https://geolocation-db.com/json/')
+    console.log(res.data);
+    setIP(res.data.IPv4)
+}
+
+useEffect(()=>{
+    //passing getData method to the lifecycle method
+    getData()
+},[])
+
 const checkAnswer = (event) => {
   event.preventDefault();
   if (inputValue.toLowerCase() === currentAnswer.toLowerCase()) {
-    setIsCorrect(true);
+  setIsCorrect(true);
   }
   setInputValue("");
-}
+  
+  addDoc(collection(getDb(), "users"), {ip: myip, guesses: "TODO"});
+
+  }
+
+// const checkAnswer = (event) => {
+//   event.preventDefault();
+//   if (inputValue.toLowerCase() === currentAnswer.toLowerCase()) {
+//     setIsCorrect(true);
+//   }
+//   setInputValue("");
+//   
+// }
 
   // Style background to be green
   const Title = styled.h1`
@@ -109,7 +160,23 @@ const Text = styled.p`
   }
   `;
   
- 
+  // let db = false;
+
+    // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  // const firebaseConfig = {
+  //   apiKey: "AIzaSyD9oy26wC2XocjF_CxAjECA807QlKDpydE",
+  //   authDomain: "riddle-81547.firebaseapp.com",
+  //   projectId: "riddle-81547",
+  //   storageBucket: "riddle-81547.appspot.com",
+  //   messagingSenderId: "385825049434",
+  //   appId: "1:385825049434:web:5911062c7907a291f14163",
+  //   measurementId: "G-16DLPGEBY2"
+  // };
+
+  // Initialize Firebase
+  // const app = initializeApp(firebaseConfig);
+
   return (
     // Create a div with class name App which contains a text box which you write to
     // and a button which you click to submit the text box contents
@@ -130,6 +197,9 @@ const Text = styled.p`
           border: 'none',
           borderRadius: '3px'
         }} /></p><Submit onClick={checkAnswer}>Check</Submit></><p>Keep Guessing!</p></>) : <Correct /> }
+        <h2>Your IP Address is</h2>
+            <h4>{myip}</h4>
+        {/* <UserList/> */}
       
     </div>
   );
