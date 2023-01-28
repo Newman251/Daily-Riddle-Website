@@ -197,8 +197,8 @@ const Text = styled.p`
           border: 'none',
           borderRadius: '3px'
         }} /></p><Submit onClick={checkAnswer}>Check</Submit></><p>Keep Guessing!</p></>) : <Correct /> }
-        <h2>Your IP Address is</h2>
-            <h4>{myip}</h4>
+        {/* <h2>Your IP Address is</h2>
+            <h4>{myip}</h4> */}
         {/* <UserList/> */}
       
     </div>
