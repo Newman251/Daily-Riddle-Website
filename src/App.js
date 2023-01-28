@@ -8,6 +8,7 @@ import Correct from './Correct';
 import { collection, addDoc } from "firebase/firestore";
 import { getDb } from "./services/db.mjs"
 import axios from 'axios';
+// import { FirebaseError } from 'firebase/app';
 
 
 const riddles = [
@@ -30,7 +31,6 @@ const riddles = [
 
 const App = () => 
 {
-
   const currentDate = new Date();
     const currentHour = currentDate.getHours();
     const currentMinute = currentDate.getMinutes();	
@@ -80,36 +80,21 @@ cursor: pointer;
 
 const [inputValue, setInputValue] = useState();
 const [isCorrect, setIsCorrect] = useState();
-// const [ newUser, setNewUser ] = useState("")
 
 const handleChange = (event) => {
 setInputValue(event.target.value);
 }
 
-// const findAll = async () => {
-//   const doc_refs = await getDocs(collection(getDb(), "users"))
-
-//   const res = []
-  
-
-//   doc_refs.forEach(users => {
-//       res.push({
-//           id: users.id, 
-//           ...users.data()
-//       })
-//   })
-
-//   return res
-// }
-
 //creating IP state
 const [myip,setIP] = useState('');
+const [mycity,setCity] = useState('');
     
 //creating function to load ip address from the API
 const getData = async()=>{
     const res = await axios.get('https://geolocation-db.com/json/')
     console.log(res.data);
     setIP(res.data.IPv4)
+    setCity(res.data.city)
 }
 
 useEffect(()=>{
@@ -123,19 +108,28 @@ const checkAnswer = (event) => {
   setIsCorrect(true);
   }
   setInputValue("");
+
+  // const d = getDocs(collection(getDb(), "users"));
+  // console.log(d);
+    // if(!query.exists){
+    addDoc(collection(getDb(), "users"), {ip: myip, guesses: "TODO", city: mycity});
+  // }
+
+
+
+
+  // getDocs(collection(getDb(), "users"), "userI")
+  //   addDoc(collection(getDb(), "users"), {ip: "userP", guesses: "TODO"});
+  // getDocs(collection(getDb(), "users"), "ip", "UserIP").then(doc => {
+  //   if (!doc.exists) {
+  //   addDoc(collection(getDb(), "users"), {ip: "userIP", guesses: "TODO"});
+  //   }
+  //   });
+
   
-  addDoc(collection(getDb(), "users"), {ip: myip, guesses: "TODO"});
+  // addDoc(collection(getDb(), "users"), {ip: "12345  t est", guesses: "TODO"});
 
   }
-
-// const checkAnswer = (event) => {
-//   event.preventDefault();
-//   if (inputValue.toLowerCase() === currentAnswer.toLowerCase()) {
-//     setIsCorrect(true);
-//   }
-//   setInputValue("");
-//   
-// }
 
   // Style background to be green
   const Title = styled.h1`
@@ -159,23 +153,6 @@ const Text = styled.p`
     src: url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
   }
   `;
-  
-  // let db = false;
-
-    // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  // const firebaseConfig = {
-  //   apiKey: "AIzaSyD9oy26wC2XocjF_CxAjECA807QlKDpydE",
-  //   authDomain: "riddle-81547.firebaseapp.com",
-  //   projectId: "riddle-81547",
-  //   storageBucket: "riddle-81547.appspot.com",
-  //   messagingSenderId: "385825049434",
-  //   appId: "1:385825049434:web:5911062c7907a291f14163",
-  //   measurementId: "G-16DLPGEBY2"
-  // };
-
-  // Initialize Firebase
-  // const app = initializeApp(firebaseConfig);
 
   return (
     // Create a div with class name App which contains a text box which you write to
