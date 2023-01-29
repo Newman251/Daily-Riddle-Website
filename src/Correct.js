@@ -49,9 +49,9 @@ function Correct() {
       {/* <StyledButton onClick={shareLink}>Share the riddle!</StyledButton> */}
       <RWebShare
         data={{
-          text: "❓I got riddle #"+currentDay.toString()+", can you❓",
-          url: "wriddle.net",
-          title: "Daily Riddles",
+          text: '❓I got riddle #'+currentDay.toString()+', can you❓',
+          url: 'http://wriddle.org',
+          title: 'Daily Riddles',
         }}
         onClick={() => console.log("shared successfully!")}
       >
