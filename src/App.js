@@ -117,7 +117,7 @@ const checkAnswer = (event) => {
   // Iterate through docs to see if ip exists
   
 
-  addDoc(collection(getDb(), "users"), {ip: myip, guesses: "TODO", city: mycity});
+  addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity});
   // getDocs(collection(getDb(), "users"), "userI")
   //   addDoc(collection(getDb(), "users"), {ip: "userP", guesses: "TODO"});
   // getDocs(collection(getDb(), "users"), "ip", "UserIP").then(doc => {
