@@ -161,7 +161,8 @@ const Text = styled.p`
     // Add a text box above the button
     <div className="App">
       <Timer>Time unitil next riddle: {hours}:{minutes}:{seconds}</Timer>
-        <Title>Daily Riddle</Title>
+        <Title>Wriddle: Daily Riddle</Title>
+        {/* <img src="./logo192.PNG"></img>  */}
         {!isCorrect ? ( <><><Text id="text"><i>{currentRiddle}</i></Text><p><input
         type="text"
         value={inputValue}
