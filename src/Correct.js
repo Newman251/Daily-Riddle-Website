@@ -30,16 +30,15 @@ function Correct() {
 
   const shareLink = () => {
     // if (navigator.share) {
-      if (navigator.share) {
-        navigator.share({
-          title: 'Daily Riddles',
-          text: '❓I got riddle #'+currentDay.toString()+', can you❓',
-          url: currentUrl
+      if ('clipboard' in navigator) {
+        navigator.clipboard.writeText('❓I got riddle #'+currentDay.toString()+', can you❓' + currentUrl).then(function() {
+          console.log('Riddle text and link copied to clipboard');
+        }, function(err) {
+          console.error('Failed to copy text: ', err);
         });
       } else {
-        // Fallback method for sharing
-        var shareUrl = "whatsapp://send?text=" + encodeURIComponent(currentUrl);
-        window.open(shareUrl, '_blank');
+        // Fallback for browsers that do not support clipboard API
+        prompt("Copy to clipboard: Ctrl+C, Enter", '❓I got riddle #'+currentDay.toString()+', can you❓' + currentUrl);
       }
     // } else {
     //   prompt("Copy to clipboard: Ctrl+C, Enter", currentUrl);
