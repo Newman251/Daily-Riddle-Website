@@ -29,17 +29,17 @@ function Correct() {
   const currentDay = currentDate.getDay() + 7;
 
   const shareLink = () => {
-    if (navigator.share) {
+    // if (navigator.share) {
       navigator.share({
         title: 'Daily Riddles',
         text: '❓I got riddle #'+currentDay.toString()+', can you❓',
-        url: currentUrl,
+        url: "http://wriddle.org",
       })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing:', error));
-    } else {
-      prompt("Copy to clipboard: Ctrl+C, Enter", currentUrl);
-    }
+    // } else {
+    //   prompt("Copy to clipboard: Ctrl+C, Enter", currentUrl);
+    // }
   }
 
   return (
