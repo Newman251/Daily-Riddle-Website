@@ -162,7 +162,7 @@ const Text = styled.p`
     <div className="App">
       <Timer>Time unitil next riddle: {hours}:{minutes}:{seconds}</Timer>
         <Title>Wriddle: Daily Riddle</Title>
-        {/* <img src="./logo192.PNG"></img>  */}
+        <img src="./logo192.PNG"></img> 
         {!isCorrect ? ( <><><Text id="text"><i>{currentRiddle}</i></Text><p><input
         type="text"
         value={inputValue}

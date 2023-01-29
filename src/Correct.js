@@ -30,13 +30,17 @@ function Correct() {
 
   const shareLink = () => {
     // if (navigator.share) {
-      navigator.share({
-        title: 'Daily Riddles',
-        text: '❓I got riddle #'+currentDay.toString()+', can you❓',
-        url: currentUrl
-      })
-        .then(() => console.log('Successful share'))
-        .catch((error) => console.log('Error sharing:', error));
+      if (navigator.share) {
+        navigator.share({
+          title: 'Daily Riddles',
+          text: '❓I got riddle #'+currentDay.toString()+', can you❓',
+          url: currentUrl
+        });
+      } else {
+        // Fallback method for sharing
+        var shareUrl = "whatsapp://send?text=" + encodeURIComponent(currentUrl);
+        window.open(shareUrl, '_blank');
+      }
     // } else {
     //   prompt("Copy to clipboard: Ctrl+C, Enter", currentUrl);
     // }
