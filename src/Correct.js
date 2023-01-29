@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RWebShare } from "react-web-share";
 
 function Correct() {
-  // const currentUrl = 'http://wriddle.org';
+  const currentUrl = window.location.href;
 
   const StyledButton = styled.button`
     background-color: #4CAF50;
@@ -29,34 +28,25 @@ function Correct() {
   const currentDate = new Date();
   const currentDay = currentDate.getDay() + 7;
 
-  // const shareLink = () => {
-  //   // if (navigator.share) {
-  //     navigator.share({
-  //       title: 'Daily Riddles',
-  //       text: '❓I got riddle #'+currentDay.toString()+', can you❓',
-  //       url: currentUrl
-  //     })
-  //       .then(() => console.log('Successful share'))
-  //       .catch((error) => console.log('Error sharing:', error));
-  //   // } else {
-  //   //   prompt("Copy to clipboard: Ctrl+C, Enter", currentUrl);
-  //   // }
+  const shareLink = () => {
+    // if (navigator.share) {
+      navigator.share({
+        title: 'Daily Riddles',
+        text: '❓I got riddle #'+currentDay.toString()+', can you❓',
+        url: currentUrl
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing:', error));
+    } 
+    // else {
+    //   prompt("Copy to clipboard: Ctrl+C, Enter", currentUrl);
+    // }
   // }
 
   return (
     <div>
       <Title>You got it!!</Title>
-      {/* <StyledButton onClick={shareLink}>Share the riddle!</StyledButton> */}
-      <RWebShare
-        data={{
-          text: '❓I got riddle #'+currentDay.toString()+', can you❓',
-          url: 'http://wriddle.org',
-          title: 'Daily Riddles',
-        }}
-        onClick={() => console.log("shared successfully!")}
-      >
-        <StyledButton>Share on Web</StyledButton>
-      </RWebShare>
+      <StyledButton onClick={shareLink}>Share the riddle!</StyledButton>
     </div>
   );
 }
