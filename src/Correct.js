@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { RWebShare } from "react-web-share";
 
 function Correct() {
   const currentUrl = 'http://wriddle.org';
@@ -28,27 +29,34 @@ function Correct() {
   const currentDate = new Date();
   const currentDay = currentDate.getDay() + 7;
 
-  const shareLink = () => {
-    // if (navigator.share) {
-      if ('clipboard' in navigator) {
-        navigator.clipboard.writeText('❓I got riddle #'+currentDay.toString()+', can you❓' + currentUrl).then(function() {
-          console.log('Riddle text and link copied to clipboard');
-        }, function(err) {
-          console.error('Failed to copy text: ', err);
-        });
-      } else {
-        // Fallback for browsers that do not support clipboard API
-        prompt("Copy to clipboard: Ctrl+C, Enter", '❓I got riddle #'+currentDay.toString()+', can you❓' + currentUrl);
-      }
-    // } else {
-    //   prompt("Copy to clipboard: Ctrl+C, Enter", currentUrl);
-    // }
-  }
+  // const shareLink = () => {
+  //   // if (navigator.share) {
+  //     navigator.share({
+  //       title: 'Daily Riddles',
+  //       text: '❓I got riddle #'+currentDay.toString()+', can you❓',
+  //       url: currentUrl
+  //     })
+  //       .then(() => console.log('Successful share'))
+  //       .catch((error) => console.log('Error sharing:', error));
+  //   // } else {
+  //   //   prompt("Copy to clipboard: Ctrl+C, Enter", currentUrl);
+  //   // }
+  // }
 
   return (
     <div>
       <Title>You got it!!</Title>
-      <StyledButton onClick={shareLink}>Share the riddle!</StyledButton>
+      {/* <StyledButton onClick={shareLink}>Share the riddle!</StyledButton> */}
+      <RWebShare
+        data={{
+          text: "❓I got riddle #'+currentDay.toString()+', can you❓",
+          url: "wriddle.net",
+          title: "Daily Riddles",
+        }}
+        onClick={() => console.log("shared successfully!")}
+      >
+        <StyledButton>Share on Web</StyledButton>
+      </RWebShare>
     </div>
   );
 }
