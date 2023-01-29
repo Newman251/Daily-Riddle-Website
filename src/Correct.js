@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { RWebShare } from "react-web-share";
 
 function Correct() {
-  const currentUrl = 'http://wriddle.org';
+  // const currentUrl = 'http://wriddle.org';
 
   const StyledButton = styled.button`
     background-color: #4CAF50;
@@ -49,7 +49,7 @@ function Correct() {
       {/* <StyledButton onClick={shareLink}>Share the riddle!</StyledButton> */}
       <RWebShare
         data={{
-          text: "❓I got riddle #'+currentDay.toString()+', can you❓",
+          text: "❓I got riddle #"+currentDay.toString()+", can you❓",
           url: "wriddle.net",
           title: "Daily Riddles",
         }}
