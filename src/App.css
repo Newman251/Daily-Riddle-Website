@@ -14,14 +14,14 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #d1f4fe;
 }
 
 .App-input {
-  color: #61dafb;
+  color: #d1f4fe;
 }
 
 body{
-  background-color: lightblue;
+  background-color: #d1f4fe;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

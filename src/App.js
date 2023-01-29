@@ -109,15 +109,15 @@ const checkAnswer = (event) => {
   }
   setInputValue("");
 
-  // const d = getDocs(collection(getDb(), "users"));
-  // console.log(d);
-    // if(!query.exists){
-    addDoc(collection(getDb(), "users"), {ip: myip, guesses: "TODO", city: mycity});
-  // }
+  // If the IP address exists in the database, update the guesses field
 
+  // const docs = getDoc(doc(getDb(), "users", "ip")) 
+  // console.log(docs.data())
 
+  // Iterate through docs to see if ip exists
+  
 
-
+  addDoc(collection(getDb(), "users"), {ip: myip, guesses: "TODO", city: mycity});
   // getDocs(collection(getDb(), "users"), "userI")
   //   addDoc(collection(getDb(), "users"), {ip: "userP", guesses: "TODO"});
   // getDocs(collection(getDb(), "users"), "ip", "UserIP").then(doc => {
@@ -141,9 +141,10 @@ const checkAnswer = (event) => {
 // Styple the timer to be fancier make it bold
 const Timer = styled.p`
   font-family: "museo", Helvetica Neue, Helvetica, sans-serif;  
-  font-size: 1.2em;
+  font-size: 1.3em;
   text-align: center;
-  color: black;
+  color: #296575;
+  font-weight: bold;
 `;
 
 // Change the text font of the riddle to be fancier
@@ -172,12 +173,11 @@ const Text = styled.p`
           color: 'palevioletred',
           background: 'papayawhip',
           border: 'none',
-          borderRadius: '3px'
-        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><p>Keep Guessing!</p></>) : <Correct /> }
+          borderRadius: '30px'
+        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>Keep Guessing!</Timer></>) : <Correct /> }
         {/* <h2>Your IP Address is</h2>
             <h4>{myip}</h4> */}
         {/* <UserList/> */}
-      
     </div>
   );
 }
