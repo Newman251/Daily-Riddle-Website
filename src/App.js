@@ -13,14 +13,7 @@ import axios from 'axios';
 
 const riddles = [
   { question: 'What kind of ship has two mates but no captain?', answer: 'relationship' },
-  { question: 'What is there one of in every corner and two of in every room?', answer: 'o' },
-  { question: 'Who can finish a book without finishing a sentence?', answer: 'prisoner' },
-  { question: 'I Start with M, end with X, and have a never-ending amount of letters. What am I?', answer: 'mailbox' },
-  { question: 'What is full of holes but still holds water?', answer: 'sponge' },
-  { question: 'What can you break, even if you never pick it up or touch it?', answer: 'promise' },
-  { question: 'I shave every day, but my beard stays the same. What am I?', answer: 'barber' },
   { question: 'What word is always spelled wrong?', answer: 'wrong' },
-  { question: 'What kind of ship has two mates but no captain?', answer: 'relationship' },
   { question: 'I go around all the places, cities, towns, and villages, but never come inside. What am I?', answer: 'street' },
   { question: 'I am higher without a head. What am I?', answer: 'pillow' },
   { question: 'What type of cheese is made backward?', answer: 'edam' },
