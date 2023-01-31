@@ -14,10 +14,12 @@ const DropdownContainer = styled.div`
 
 const DropdownButton = styled.button`
   display: inline-block;
-  margin-left: 22em;
-  margin-top: 1em;
+  margin-left: 17em;
+  margin-top: 0.5em;
+  size: 100%;
   background-color: transparent;
   border: 1px solid transparent;
+  font-size: 2.2em;
 `;
 
 const DropdownList = styled.ul`
@@ -74,12 +76,12 @@ const PopupContainer = styled.div`
 const Button = styled.button`
     background-color: Gray;
     border: 1px solid transparent;
-    font-size: 3em;
+    font-size: 5em;
     font-weight: 1000;
     color: #36454f;
     padding: 0.25em 1em;
     border-radius: 3px;
-    margin: 0.5em 1em;
+    margin: 1em 1em;
     cursor: pointer;
     &:hover {
         background-color: #f2f2f2;
@@ -120,9 +122,9 @@ function Menu() {
       </DropdownButton>
       {showMenu && (
         <DropdownList>
-          <DropdownItem onClick={() => handleClick('Settings: None yet sorry')}>Settings</DropdownItem>
-          <DropdownItem onClick={() => handleClick('How to Play: Guess the riddle! A new one appears every day. Think outside the box...')}>How to Play</DropdownItem>
-          <DropdownItem onClick={() => handleClick('Mr. Newman For enquiries, email: wriddle@gmail.com')}>Credits</DropdownItem>
+          <DropdownItem onClick={() => handleClick('No settings yet, and no there is not an easy mode. Keep guessing ;)')}>Settings</DropdownItem>
+          <DropdownItem onClick={() => handleClick('Guess the riddle! A new one appears every day. Think outside the box, or inside the box...')}>How to Play</DropdownItem>
+          <DropdownItem onClick={() => handleClick('Website created in Dublin, Ireland. For enquiries, email - wriddledaily@gmail.com')}>Credits</DropdownItem>
         </DropdownList>
       )}
       {showPopup.display && (

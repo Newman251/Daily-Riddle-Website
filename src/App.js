@@ -1,22 +1,22 @@
 import './App.css';
 import styled from 'styled-components';
 import React, { useState, useEffect, useCallback } from 'react';
-import Correct from './Correct';
+import Correct from './components/Correct';
 // import { initializeApp } from "firebase/app";
 // import { getFirestore } from "firebase/firestore"; 
-// import UserList from './components/user-list.js'
 import { collection, addDoc } from "firebase/firestore";
 import { getDb } from "./services/db.mjs"
 import axios from 'axios';
 import Menu from './components/Menu.js';
+import SetLogo from './components/SetLogo.js';
 // import { stringLength } from '@firebase/util';
 // import { FirebaseError } from 'firebase/app';
+
 
 
 const riddles = [
   { question: 'I go around all the places, cities, towns, and villages, but never come inside. What am I?', answer: 'street' },
   { question: 'I am higher without a head. What am I?', answer: 'pillow' },
-  { question: 'What type of cheese is made backward?', answer: 'edam' },
   { question: 'I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I? ', answer: 'echo' },
   { question: 'You measure my life in hours and I serve you by expiring. I’m quick when I’m thin and slow when I’m fat. The wind is my enemy. What am I?', answer: 'candle' },
   { question: 'I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?', answer: 'map' },
@@ -24,8 +24,10 @@ const riddles = [
   { question: 'What word in the English language does the following: the first two letters signify a male, the first three letters signify a female, the first four letters signify a great, while the entire world signifies a great woman. What is the word? ', answer: 'heroine' },
   { question: 'What disappears as soon as you say its name? ', answer: 'silence' },
   { question: 'Which word becomes shorter when you add 2 letters to it?', answer: 'short' },
+  { question: 'What type of cheese is made backward?', answer: 'edam' },
   { question: 'I can be cracked, I can be made. I can be told, I can be played. What am I?', answer: 'joke' }
 ];
+
 const App = () => 
 {
     const currentDate = new Date();
@@ -39,6 +41,7 @@ const App = () =>
     const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
     const [currentRiddle] = useState(riddles[currentDay % riddles.length-2].question);
     const [currentAnswer] = useState(riddles[currentDay % riddles.length-2].answer);
+    const [currentPrompt, setCurrentPrompt] = useState('');
 
 
     useEffect(() => {
@@ -101,9 +104,13 @@ useEffect(()=>{
 
 const checkAnswer = useCallback((event) => {
   event.preventDefault();
-  if (inputValue.toLowerCase() === currentAnswer.toLowerCase()) {
-  setIsCorrect(true);
-  } 
+
+  // Search the entire input string to see if the answer is contained anywhere within it
+  if (inputValue.toLowerCase().includes(currentAnswer)) {
+    setIsCorrect(true);
+  }
+
+  setCurrentPrompt('Keep Guessing!');
   setInputValue("");
   addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity});
 
@@ -116,6 +123,7 @@ const Timer = styled.p`
   text-align: center;
   color: #36454f;
   font-weight: bold;
+  margin-top: 1em;
 `;
 
 // Change the text font of the riddle to be fancier
@@ -126,19 +134,10 @@ const Text = styled.p`
   }
   `;
 
-// Style the image and make it smaller
-// Make it skip a few spaces above the riddle
-const Image = styled.img`
-  display: inline-block;
-  margin-top: 0em;
-  width: 100%;
-  height: 200%;
-`;
-
 // Styled italics for the riddle
 const Italics = styled.i`
   font-style: italic;
-  font-size: 1.5em;
+  font-size: 1.3em;
 `;
 
 // Function so that when the enter key is pressed, the answer is submitted
@@ -154,16 +153,14 @@ useEffect(() => {
   }
 }, [checkAnswer]);
 
-
   return (
     // Create a div with class name App which contains a text box which you write to
     // and a button which you click to submit the text box contents
     // Add a text box above the button
     <div className="App">
       <Menu />
-        <Image src="./logo192.PNG"></Image>
-        <Timer>Time unitil next riddle: {hours}:{minutes}:{seconds}</Timer>
-        {/* <img src="./logo192.PNG"></img>  */}
+      <SetLogo />
+      <Timer>Time unitil next riddle: {hours}:{minutes}:{seconds}</Timer>
         {!isCorrect ? ( <><><Text id="text"><Italics>{currentRiddle}</Italics></Text><p><input
         type="text"
         value={inputValue}
@@ -179,7 +176,7 @@ useEffect(() => {
           background: 'papayawhip',
           border: '2px solid black',
           borderRadius: '20px'
-        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>Keep Guessing!</Timer></>) : <Correct /> }
+        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>{currentPrompt}</Timer></>) : <Correct /> }
     </div>
   );
 }
