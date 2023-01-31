@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 function Correct() {
   const currentUrl = window.location.href;
+  
 
   const StyledButton = styled.button`
     background-color: #4CAF50;
@@ -22,7 +23,7 @@ function Correct() {
     const Title = styled.h1`
       font-size: 1.5em;
       text-align: center;
-      color: palevioletred;
+      color: #36454f;
   `;
 
   const currentDate = new Date();

@@ -10,18 +10,55 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #e3e3e1;
 }
 
 .App-link {
-  color: #d1f4fe;
+  color: #e3e3e1;
 }
 
 .App-input {
-  color: #d1f4fe;
+  color: #e3e3e1;
 }
 
 body{
-  background-color: #d1f4fe;
+  background-color: #e3e3e1;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dropdown-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu button {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.dropdown-menu ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  list-style: none;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 0;
+  margin: 0;
+  display: none;
+}
+
+.dropdown-menu ul li {
+  padding: 8px 10px;
+}
+
+.dropdown-menu ul li:hover {
+  background-color: #f2f2f2;
+}
+
+.dropdown-menu.show ul {
+  display: block;
 }

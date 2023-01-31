@@ -1,6 +1,6 @@
 import './App.css';
 import styled from 'styled-components';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Correct from './Correct';
 // import { initializeApp } from "firebase/app";
 // import { getFirestore } from "firebase/firestore"; 
@@ -8,23 +8,27 @@ import Correct from './Correct';
 import { collection, addDoc } from "firebase/firestore";
 import { getDb } from "./services/db.mjs"
 import axios from 'axios';
+import Menu from './components/Menu.js';
+// import { stringLength } from '@firebase/util';
 // import { FirebaseError } from 'firebase/app';
 
 
 const riddles = [
-  { question: 'What kind of ship has two mates but no captain?', answer: 'relationship' },
-  { question: 'What word is always spelled wrong?', answer: 'wrong' },
   { question: 'I go around all the places, cities, towns, and villages, but never come inside. What am I?', answer: 'street' },
   { question: 'I am higher without a head. What am I?', answer: 'pillow' },
   { question: 'What type of cheese is made backward?', answer: 'edam' },
-  { question: 'If you drop a yellow hat in the Red Sea, what does it become?', answer: 'wet' },
+  { question: 'I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I? ', answer: 'echo' },
+  { question: 'You measure my life in hours and I serve you by expiring. I’m quick when I’m thin and slow when I’m fat. The wind is my enemy. What am I?', answer: 'candle' },
+  { question: 'I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?', answer: 'map' },
+  { question: 'What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?', answer: 'r' },
+  { question: 'What word in the English language does the following: the first two letters signify a male, the first three letters signify a female, the first four letters signify a great, while the entire world signifies a great woman. What is the word? ', answer: 'heroine' },
+  { question: 'What disappears as soon as you say its name? ', answer: 'silence' },
   { question: 'Which word becomes shorter when you add 2 letters to it?', answer: 'short' },
   { question: 'I can be cracked, I can be made. I can be told, I can be played. What am I?', answer: 'joke' }
 ];
-
 const App = () => 
 {
-  const currentDate = new Date();
+    const currentDate = new Date();
     const currentHour = currentDate.getHours();
     const currentMinute = currentDate.getMinutes();	
     const currentSecond = currentDate.getSeconds();
@@ -33,8 +37,8 @@ const App = () =>
     const minutesLeft = 60 - currentMinute - 1;
     const currentDay = currentDate.getDay();
     const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
-    const [currentRiddle] = useState(riddles[currentDay % riddles.length].question);
-    const [currentAnswer] = useState(riddles[currentDay % riddles.length].answer);
+    const [currentRiddle] = useState(riddles[currentDay % riddles.length-2].question);
+    const [currentAnswer] = useState(riddles[currentDay % riddles.length-2].answer);
 
 
     useEffect(() => {
@@ -61,13 +65,13 @@ const App = () =>
 
     // Style submit button to be red curve the edges
 const Submit = styled.button`
-padding: 0.25em 1em;
+padding: 0.8em 2.5em;
 border-radius: 8px;
-background: palevioletred;
+background: #36454f;
 margin: 1em;
 font-size: 1.5em;
 text-align: center;
-color: black;
+color: white;
 cursor: pointer;
 `;
 
@@ -95,48 +99,22 @@ useEffect(()=>{
     getData()
 },[])
 
-const checkAnswer = (event) => {
+const checkAnswer = useCallback((event) => {
   event.preventDefault();
   if (inputValue.toLowerCase() === currentAnswer.toLowerCase()) {
   setIsCorrect(true);
-  }
+  } 
   setInputValue("");
-
-  // If the IP address exists in the database, update the guesses field
-
-  // const docs = getDoc(doc(getDb(), "users", "ip")) 
-  // console.log(docs.data())
-
-  // Iterate through docs to see if ip exists
-  
-
   addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity});
-  // getDocs(collection(getDb(), "users"), "userI")
-  //   addDoc(collection(getDb(), "users"), {ip: "userP", guesses: "TODO"});
-  // getDocs(collection(getDb(), "users"), "ip", "UserIP").then(doc => {
-  //   if (!doc.exists) {
-  //   addDoc(collection(getDb(), "users"), {ip: "userIP", guesses: "TODO"});
-  //   }
-  //   });
 
-  
-  // addDoc(collection(getDb(), "users"), {ip: "12345  t est", guesses: "TODO"});
-
-  }
-
-  // Style background to be green
-  const Title = styled.h1`
-    font-size: 1.5em;
-    text-align: center;
-    color: palevioletred;
-`;
+  }, [inputValue, currentAnswer, myip, mycity]);
 
 // Styple the timer to be fancier make it bold
 const Timer = styled.p`
   font-family: "museo", Helvetica Neue, Helvetica, sans-serif;  
   font-size: 1.3em;
   text-align: center;
-  color: #296575;
+  color: #36454f;
   font-weight: bold;
 `;
 
@@ -148,30 +126,60 @@ const Text = styled.p`
   }
   `;
 
+// Style the image and make it smaller
+// Make it skip a few spaces above the riddle
+const Image = styled.img`
+  display: inline-block;
+  margin-top: 0em;
+  width: 100%;
+  height: 200%;
+`;
+
+// Styled italics for the riddle
+const Italics = styled.i`
+  font-style: italic;
+  font-size: 1.5em;
+`;
+
+// Function so that when the enter key is pressed, the answer is submitted
+useEffect(() => {
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      checkAnswer(event);
+    }
+  }
+  document.addEventListener('keydown', handleKeyDown);
+  return () => {
+    document.removeEventListener('keydown', handleKeyDown);
+  }
+}, [checkAnswer]);
+
+
   return (
     // Create a div with class name App which contains a text box which you write to
     // and a button which you click to submit the text box contents
     // Add a text box above the button
     <div className="App">
-      <Timer>Time unitil next riddle: {hours}:{minutes}:{seconds}</Timer>
-        <Title>Wriddle: Daily Riddle</Title>
+      <Menu />
+        <Image src="./logo192.PNG"></Image>
+        <Timer>Time unitil next riddle: {hours}:{minutes}:{seconds}</Timer>
         {/* <img src="./logo192.PNG"></img>  */}
-        {!isCorrect ? ( <><><Text id="text"><i>{currentRiddle}</i></Text><p><input
+        {!isCorrect ? ( <><><Text id="text"><Italics>{currentRiddle}</Italics></Text><p><input
         type="text"
         value={inputValue}
         onChange={handleChange}
         placeholder="Enter your answer here"
         style={{
-          padding: '2em',
+          width: '50%',
+          height: '2em',
+          padding: '1.1em',
           margin: '2em',
-          color: 'palevioletred',
+          color: 'Black',
+          fontSize: '1.1em',
           background: 'papayawhip',
-          border: 'none',
-          borderRadius: '30px'
+          border: '2px solid black',
+          borderRadius: '20px'
         }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>Keep Guessing!</Timer></>) : <Correct /> }
-        {/* <h2>Your IP Address is</h2>
-            <h4>{myip}</h4> */}
-        {/* <UserList/> */}
     </div>
   );
 }
