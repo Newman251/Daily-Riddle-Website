@@ -102,19 +102,34 @@ useEffect(()=>{
     getData()
 },[])
 
+const [correctGuess, setCorrectGuess] = useState();
+const [guess, setGuess] = useState(
+  localStorage.getItem("guessCount")
+    ? Number(localStorage.getItem("guessCount"))
+    : 1
+);
+
 const checkAnswer = useCallback((event) => {
   event.preventDefault();
+
+  
 
   // Search the entire input string to see if the answer is contained anywhere within it
   if (inputValue.toLowerCase().includes(currentAnswer)) {
     setIsCorrect(true);
+    setCorrectGuess(guess)
+    setGuess(1);
+    localStorage.setItem("guessCount", 1);
+  } else {
+    setGuess(guess + 1);
+    localStorage.setItem("guessCount", guess + 1);
   }
 
   setCurrentPrompt('Keep Guessing!');
   setInputValue("");
-  addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity});
+  addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, guessCount: guess});
 
-  }, [inputValue, currentAnswer, myip, mycity]);
+  }, [inputValue, currentAnswer, myip, mycity, guess]);
 
 // Styple the timer to be fancier make it bold
 const Timer = styled.p`
@@ -153,6 +168,11 @@ useEffect(() => {
   }
 }, [checkAnswer]);
 
+// const handleClick = () => {
+  
+  
+// };
+
   return (
     // Create a div with class name App which contains a text box which you write to
     // and a button which you click to submit the text box contents
@@ -176,7 +196,7 @@ useEffect(() => {
           background: 'papayawhip',
           border: '2px solid black',
           borderRadius: '20px'
-        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>{currentPrompt}</Timer></>) : <Correct /> }
+        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>{currentPrompt}</Timer></>) : <><Correct /><Timer>Guess Count: {correctGuess}</Timer></> }
     </div>
   );
 }
