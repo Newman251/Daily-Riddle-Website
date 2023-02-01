@@ -38,7 +38,7 @@ const App = () =>
     const secondsLeft = 60 - currentSecond;
     const minutesLeft = 60 - currentMinute - 1;
     const currentDay = currentDate.getDay();
-    const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
+    const [timeLeft, setTimeLeft] = useState(5);
     const [currentRiddle] = useState(riddles[currentDay % riddles.length-2].question);
     const [currentAnswer] = useState(riddles[currentDay % riddles.length-2].answer);
     const [currentPrompt, setCurrentPrompt] = useState('');
@@ -51,6 +51,8 @@ const App = () =>
 
         if (timeLeft === 0) {
             clearInterval(intervalId);
+            setGuess(1);
+            localStorage.setItem("guessCount", 1);
         }
 
         return () => clearInterval(intervalId);
