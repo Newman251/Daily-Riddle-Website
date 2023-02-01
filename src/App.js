@@ -38,7 +38,7 @@ const App = () =>
     const secondsLeft = 60 - currentSecond;
     const minutesLeft = 60 - currentMinute - 1;
     const currentDay = currentDate.getDay();
-    const [timeLeft, setTimeLeft] = useState(5);
+    const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
     const [currentRiddle] = useState(riddles[currentDay % riddles.length-2].question);
     const [currentAnswer] = useState(riddles[currentDay % riddles.length-2].answer);
     const [currentPrompt, setCurrentPrompt] = useState('');
@@ -182,7 +182,7 @@ useEffect(() => {
     <div className="App">
       <Menu />
       <SetLogo />
-      <Timer>Time unitil next riddle: {hours}:{minutes}:{seconds}</Timer>
+      <Timer>Time until next riddle: {hours}:{minutes}:{seconds}</Timer>
         {!isCorrect ? ( <><><Text id="text"><Italics>{currentRiddle}</Italics></Text><p><input
         type="text"
         value={inputValue}
