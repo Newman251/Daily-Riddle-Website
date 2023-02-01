@@ -2,28 +2,22 @@ import './App.css';
 import styled from 'styled-components';
 import React, { useState, useEffect, useCallback } from 'react';
 import Correct from './components/Correct';
-// import { initializeApp } from "firebase/app";
-// import { getFirestore } from "firebase/firestore"; 
 import { collection, addDoc } from "firebase/firestore";
 import { getDb } from "./services/db.mjs"
 import axios from 'axios';
 import Menu from './components/Menu.js';
 import SetLogo from './components/SetLogo.js';
-// import { stringLength } from '@firebase/util';
-// import { FirebaseError } from 'firebase/app';
-
-
 
 const riddles = [
   { question: 'I go around all the places, cities, towns, and villages, but never come inside. What am I?', answer: 'street' },
   { question: 'I am higher without a head. What am I?', answer: 'pillow' },
-  { question: 'I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I? ', answer: 'echo' },
   { question: 'You measure my life in hours and I serve you by expiring. I’m quick when I’m thin and slow when I’m fat. The wind is my enemy. What am I?', answer: 'candle' },
   { question: 'I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?', answer: 'map' },
   { question: 'What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?', answer: 'r' },
   { question: 'What word in the English language does the following: the first two letters signify a male, the first three letters signify a female, the first four letters signify a great, while the entire world signifies a great woman. What is the word? ', answer: 'heroine' },
   { question: 'What disappears as soon as you say its name? ', answer: 'silence' },
   { question: 'Which word becomes shorter when you add 2 letters to it?', answer: 'short' },
+  { question: 'I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I? ', answer: 'echo' },
   { question: 'What type of cheese is made backward?', answer: 'edam' },
   { question: 'I can be cracked, I can be made. I can be told, I can be played. What am I?', answer: 'joke' }
 ];

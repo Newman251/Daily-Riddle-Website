@@ -37,11 +37,7 @@ function Correct() {
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing:', error));
     } 
-    // else {
-    //   prompt("Copy to clipboard: Ctrl+C, Enter", currentUrl);
-    // }
-  // }
-
+    
   return (
     <div>
       <Title>You got it!!</Title>
