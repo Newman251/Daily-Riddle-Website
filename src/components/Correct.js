@@ -32,7 +32,7 @@ function Correct() {
       navigator.share({
         title: 'Daily Riddles',
         text: '❓I got riddle #'+currentDay.toString()+', can you❓',
-        url: 'https://wirddle.net'
+        url: 'https://wriddle.net'
       })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing:', error));
