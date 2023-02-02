@@ -36,6 +36,21 @@ const App = () =>
     const [currentRiddle] = useState(riddles[currentDay % riddles.length-2].question);
     const [currentAnswer] = useState(riddles[currentDay % riddles.length-2].answer);
     const [currentPrompt, setCurrentPrompt] = useState('');
+    const riddleNumber = currentDate.getDay() + 7;
+    const [inputValue, setInputValue] = useState();
+    const [isCorrect, setIsCorrect] = useState();
+    const calendarDate = currentDate.toLocaleDateString();
+    const [correctGuess, setCorrectGuess] = useState();
+    const [guess, setGuess] = useState(
+      localStorage.getItem("guessCount")
+        ? Number(localStorage.getItem("guessCount"))
+        : 1
+    );
+    const [myip,setIP] = useState('');
+    const [mycity,setCity] = useState('');
+    const seconds = timeLeft % 60;
+    const minutes = Math.floor(timeLeft / 60) % 60;
+    const hours = Math.floor(timeLeft / 60 / 60);
 
 
     useEffect(() => {
@@ -52,38 +67,16 @@ const App = () =>
         return () => clearInterval(intervalId);
     }, [timeLeft]);
 
-    const seconds = timeLeft % 60;
-    const minutes = Math.floor(timeLeft / 60) % 60;
-    const hours = Math.floor(timeLeft / 60 / 60);
-
     useEffect(() => {
       if (timeLeft === 0) {
         setTimeLeft(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft); // reset the timer
       }
     }, [timeLeft, hoursLeft, minutesLeft, secondsLeft]);
 
-    // Style submit button to be red curve the edges
-const Submit = styled.button`
-padding: 0.8em 2.5em;
-border-radius: 8px;
-background: #36454f;
-margin: 1em;
-font-size: 1.5em;
-text-align: center;
-color: white;
-cursor: pointer;
-`;
-
-const [inputValue, setInputValue] = useState();
-const [isCorrect, setIsCorrect] = useState();
 
 const handleChange = (event) => {
 setInputValue(event.target.value);
 }
-
-//creating IP state
-const [myip,setIP] = useState('');
-const [mycity,setCity] = useState('');
     
 //creating function to load ip address from the API
 const getData = async()=>{
@@ -98,18 +91,9 @@ useEffect(()=>{
     getData()
 },[])
 
-const [correctGuess, setCorrectGuess] = useState();
-const [guess, setGuess] = useState(
-  localStorage.getItem("guessCount")
-    ? Number(localStorage.getItem("guessCount"))
-    : 1
-);
 
 const checkAnswer = useCallback((event) => {
   event.preventDefault();
-
-  
-
   // Search the entire input string to see if the answer is contained anywhere within it
   if (inputValue.toLowerCase().includes(currentAnswer)) {
     setIsCorrect(true);
@@ -123,9 +107,38 @@ const checkAnswer = useCallback((event) => {
 
   setCurrentPrompt('Keep Guessing!');
   setInputValue("");
-  addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, guessCount: guess});
+  // console.log("Date: " + currentDate);
+  // Convert date to calendar date
+  // console.log("Date: " + currentDate.toLocaleDateString());
+  // // addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, guess_count: guess});
+  addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, guess_count: guess, time_left: toString(timeLeft), date: calendarDate, correct_answer: currentAnswer, riddle_number: riddleNumber});
 
-  }, [inputValue, currentAnswer, myip, mycity, guess]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, timeLeft, calendarDate, riddleNumber]);
+
+  // Function so that when the enter key is pressed, the answer is submitted
+useEffect(() => {
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      checkAnswer(event);
+    }
+  }
+  document.addEventListener('keydown', handleKeyDown);
+  return () => {
+    document.removeEventListener('keydown', handleKeyDown);
+  }
+}, [checkAnswer]);
+
+      // Style submit button to be red curve the edges
+const Submit = styled.button`
+padding: 0.8em 2.5em;
+border-radius: 8px;
+background: #36454f;
+margin: 0em;
+font-size: 1.5em;
+text-align: center;
+color: white;
+cursor: pointer;
+`;
 
 // Styple the timer to be fancier make it bold
 const Timer = styled.p`
@@ -151,23 +164,15 @@ const Italics = styled.i`
   font-size: 1.3em;
 `;
 
-// Function so that when the enter key is pressed, the answer is submitted
-useEffect(() => {
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      checkAnswer(event);
-    }
-  }
-  document.addEventListener('keydown', handleKeyDown);
-  return () => {
-    document.removeEventListener('keydown', handleKeyDown);
-  }
-}, [checkAnswer]);
-
-// const handleClick = () => {
-  
-  
-// };
+// Styled h1 for the url
+const URLStyle = styled.h1`
+  font-family: "museo", Helvetica Neue, Helvetica, sans-serif;
+  font-size: 0.6em;
+  text-align: center;
+  color: black;
+  font-weight: 150%;
+  margin-top: 0em;
+`;
 
   return (
     // Create a div with class name App which contains a text box which you write to
@@ -176,6 +181,7 @@ useEffect(() => {
     <div className="App">
       <Menu />
       <SetLogo />
+      <URLStyle>wriddle.net</URLStyle>
       <Timer>Time until next riddle: {hours}:{minutes}:{seconds}</Timer>
         {!isCorrect ? ( <><><Text id="text"><Italics>{currentRiddle}</Italics></Text><p><input
         type="text"
@@ -186,7 +192,7 @@ useEffect(() => {
           width: '50%',
           height: '2em',
           padding: '1.1em',
-          margin: '2em',
+          margin: '0.75em',
           color: 'Black',
           fontSize: '1.1em',
           background: 'papayawhip',

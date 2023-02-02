@@ -5,10 +5,10 @@ import WriddleLogo from './wriddleLogo.PNG';
 
 // Make it skip a few spaces above the riddle
 const StyledImage = styled.img`
-display: inline-block;
+display: center;
 margin-top: 0em;
 width: 100%;
-height: 220%;
+height: 240%;
 
 `;
 
