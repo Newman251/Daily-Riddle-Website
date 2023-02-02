@@ -107,13 +107,9 @@ const checkAnswer = useCallback((event) => {
 
   setCurrentPrompt('Keep Guessing!');
   setInputValue("");
-  // console.log("Date: " + currentDate);
-  // Convert date to calendar date
-  // console.log("Date: " + currentDate.toLocaleDateString());
-  // // addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, guess_count: guess});
-  addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, guess_count: guess, time_left: toString(timeLeft), date: calendarDate, correct_answer: currentAnswer, riddle_number: riddleNumber});
+  addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
 
-  }, [inputValue, currentAnswer, myip, mycity, guess, timeLeft, calendarDate, riddleNumber]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds]);
 
   // Function so that when the enter key is pressed, the answer is submitted
 useEffect(() => {
