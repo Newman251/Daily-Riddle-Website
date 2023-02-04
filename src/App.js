@@ -52,6 +52,12 @@ const App = () =>
         ? Number(localStorage.getItem("guessCount"))
         : 1
     );
+    // Create local storage for answer
+    const [answer, setAnswer] = useState(
+      localStorage.getItem("answer")
+        ? localStorage.getItem("answer")
+        : ""
+    );
     const [myip,setIP] = useState('');
     const [mycity,setCity] = useState('');
     const seconds = timeLeft % 60;
@@ -107,6 +113,15 @@ const checkAnswer = useCallback((event) => {
     setGuess(1);
     localStorage.setItem("guessCount", 1);
   } else {
+    // Check if the local storage answer is not the same as the current answer
+    if (answer !== currentAnswer) {
+      // Set the guess count to 1
+      setGuess(1);
+      localStorage.setItem("guessCount", 1);
+      // Set the local storage answer to the current answer
+      setAnswer(currentAnswer);
+      localStorage.setItem("answer", currentAnswer);
+    }
     setGuess(guess + 1);
     localStorage.setItem("guessCount", guess + 1);
   }
@@ -115,7 +130,7 @@ const checkAnswer = useCallback((event) => {
   setInputValue("");
   addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
 
-  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, answer]);
 
   // Function so that when the enter key is pressed, the answer is submitted
 useEffect(() => {
