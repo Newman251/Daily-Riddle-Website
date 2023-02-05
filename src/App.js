@@ -9,16 +9,14 @@ import Menu from './components/Menu.js';
 import SetLogo from './components/SetLogo.js';
 
 const riddles = [
-  { question: 'I go around all the places, cities, towns, and villages, but never come inside. What am I?', answer: 'street' },
-  { question: 'I am higher without a head. What am I?', answer: 'pillow' },
-  { question: 'You measure my life in hours and I serve you by expiring. I’m quick when I’m thin and slow when I’m fat. The wind is my enemy. What am I?', answer: 'candle' },
-  { question: 'I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?', answer: 'map' },
-  { question: 'What word in the English language does the following: the first two letters signify a male, the first three letters signify a female, the first four letters signify a great, while the entire world signifies a great woman. What is the word? ', answer: 'heroine' },
-  { question: 'Mike and Pat are in a desert. They both have packs on. Pat is dead. Mike, who is alive, has his pack open. Pat has his pack closed. What is in the packs? ', answer: 'parachute' },
+  { question: 'Take one out and scratch my head, I am now black but once was red. What am I?', answer: 'match' },
+  { question: 'If eleven plus two equals one, what does nine plus five equal? ', answer: 'two' },
+  { question: 'If a zookeeper had 100 pairs of animals in her zoo, and two pairs of babies are born for each one of the original animals, then (sadly) 23 animals dont survive, how many animals do you have left in total? ', answer: '977' },
+  { question: 'Mike and Pat are in a desert. They both have packs on. Pat is dead. Mike, who is alive, has his pack open. Pat has his pack closed. An airplane is in the distance. What is in the packs? ', answer: 'parachute' },
+  { question: 'What kind of coat is always wet when you put it on?  ', answer: 'paint' },
+  { question: 'What runs, but never walks. Murmurs, but never talks. Has a bed, but never sleeps. And has a mouth, but never eats?  ', answer: 'river' },
   { question: 'Two girls were born to the same mother, on the same day, at the same time, in the same month, and in the same year—but theyre not twins. How is this possible? ', answer: 'triplets' },
   { question: 'What is 3/7 chicken, 2/3 cat, and 1/2 goat? ', answer: 'chicago' },
-  { question: 'If a zookeeper had 100 pairs of animals in her zoo, and two pairs of babies are born for each one of the original animals, then (sadly) 23 animals dont survive, how many animals do you have left in total? ', answer: '977' },
-  { question: 'If eleven plus two equals one, what does nine plus five equal? ', answer: 'two' },
   { question: 'What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?', answer: 'r' },
   { question: 'A bus driver goes the wrong way on a one-way street. He passes the cops, but they don’t stop him. Why? ', answer: 'walk' },
   { question: 'I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I? ', answer: 'echo' },
@@ -39,8 +37,8 @@ const App = () =>
     const minutesLeft = 60 - currentMinute - 1;
     const currentDay = currentDate.getDay();
     const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
-    const [currentRiddle] = useState(riddles[currentDay % riddles.length-2].question);
-    const [currentAnswer] = useState(riddles[currentDay % riddles.length-2].answer);
+    const [currentRiddle] = useState(riddles[currentDay % riddles.length].question);
+    const [currentAnswer] = useState(riddles[currentDay % riddles.length].answer);
     const [currentPrompt, setCurrentPrompt] = useState('');
     const riddleNumber = currentDate.getDay() + 7;
     const [inputValue, setInputValue] = useState();
@@ -130,7 +128,7 @@ const checkAnswer = useCallback((event) => {
   setInputValue("");
   addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
 
-  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, answer]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds]);
 
   // Function so that when the enter key is pressed, the answer is submitted
 useEffect(() => {
@@ -199,7 +197,7 @@ const URLStyle = styled.h1`
       <Menu />
       <SetLogo />
       <URLStyle>wriddle.net</URLStyle>
-      <Timer>Time until next riddle: {hours}:{minutes}:{seconds}</Timer>
+      {/* <Timer>Time until next riddle: {hours}:{minutes}:{seconds}</Timer> */}
         {!isCorrect ? ( <><><Text id="text"><Italics>{currentRiddle}</Italics></Text><p><input
         type="text"
         value={inputValue}
