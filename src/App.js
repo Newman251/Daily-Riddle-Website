@@ -40,7 +40,7 @@ const App = () =>
     const [currentRiddle] = useState(riddles[currentDay % riddles.length].question);
     const [currentAnswer] = useState(riddles[currentDay % riddles.length].answer);
     const [currentPrompt, setCurrentPrompt] = useState('');
-    const riddleNumber = currentDate.getDay() + 7;
+    const riddleNumber = currentDate.getDay() + 14;
     const [inputValue, setInputValue] = useState();
     const [isCorrect, setIsCorrect] = useState();
     const calendarDate = currentDate.toLocaleDateString();
