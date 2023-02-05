@@ -25,7 +25,7 @@ function Correct() {
   `;
 
   const currentDate = new Date();
-  const currentDay = currentDate.getDay() + 7;
+  const currentDay = currentDate.getDay() + 14;
 
   const shareLink = () => {
     // if (navigator.share) {
