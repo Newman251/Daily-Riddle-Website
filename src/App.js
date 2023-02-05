@@ -11,9 +11,9 @@ import SetLogo from './components/SetLogo.js';
 const riddles = [
   { question: 'Take one out and scratch my head, I am now black but once was red. What am I?', answer: 'match' },
   { question: 'If eleven plus two equals one, what does nine plus five equal? ', answer: 'two' },
-  { question: 'If a zookeeper had 100 pairs of animals in her zoo, and two pairs of babies are born for each one of the original animals, then (sadly) 23 animals dont survive, how many animals do you have left in total? ', answer: '977' },
   { question: 'Mike and Pat are in a desert. They both have packs on. Pat is dead. Mike, who is alive, has his pack open. Pat has his pack closed. An airplane is in the distance. What is in the packs? ', answer: 'parachute' },
   { question: 'What kind of coat is always wet when you put it on?  ', answer: 'paint' },
+  { question: 'If a zookeeper had 100 pairs of animals in her zoo, and two pairs of babies are born for each one of the original animals, then (sadly) 23 animals dont survive, how many animals do you have left in total? ', answer: '977' },
   { question: 'What runs, but never walks. Murmurs, but never talks. Has a bed, but never sleeps. And has a mouth, but never eats?  ', answer: 'river' },
   { question: 'Two girls were born to the same mother, on the same day, at the same time, in the same month, and in the same year—but theyre not twins. How is this possible? ', answer: 'triplets' },
   { question: 'What is 3/7 chicken, 2/3 cat, and 1/2 goat? ', answer: 'chicago' },
@@ -128,7 +128,7 @@ const checkAnswer = useCallback((event) => {
   setInputValue("");
   addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
 
-  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, answer]);
 
   // Function so that when the enter key is pressed, the answer is submitted
 useEffect(() => {
