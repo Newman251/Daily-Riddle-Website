@@ -7,6 +7,7 @@ import { getDb } from "./services/db.mjs"
 import axios from 'axios';
 import Menu from './components/Menu.js';
 import SetLogo from './components/SetLogo.js';
+// import Leaderboard from './components/Leaderboard';
 
 const riddles = [
   { question: 'If eleven plus two equals one, what does nine plus seven equal? ', answer: 'four'||'4' },
@@ -58,10 +59,10 @@ const App = () =>
     );
     const [myip,setIP] = useState('');
     const [mycity,setCity] = useState('');
-    const seconds = timeLeft % 60;
-    const minutes = Math.floor(timeLeft / 60) % 60;
-    const hours = Math.floor(timeLeft / 60 / 60);
-
+    // Declare seconds, minutes, and hours as state variables, with a 0 before it if it is a single digit
+    const seconds = timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60;
+    const minutes = Math.floor(timeLeft / 60) % 60 < 10 ? `0${Math.floor(timeLeft / 60) % 60}` : Math.floor(timeLeft / 60) % 60;
+    const hours = Math.floor(timeLeft / 60 / 60) < 10 ? `0${Math.floor(timeLeft / 60 / 60)}` : Math.floor(timeLeft / 60 / 60);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -194,6 +195,7 @@ const URLStyle = styled.h1`
     // and a button which you click to submit the text box contents
     // Add a text box above the button
     <div className="App">
+      {/* <Leaderboard/> */}
       <Menu />
       <SetLogo />
       <URLStyle>wriddle.net</URLStyle>

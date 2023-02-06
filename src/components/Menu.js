@@ -122,7 +122,7 @@ function Menu() {
       </DropdownButton>
       {showMenu && (
         <DropdownList>
-          <DropdownItem onClick={() => handleClick('No settings yet, and no there is not an easy mode. Keep guessing ;)')}>Settings</DropdownItem>
+          <DropdownItem onClick={() => handleClick('Settings yet to be implemented. Newcastle are shite and will lose to utd in the final.')}>Settings</DropdownItem>
           <DropdownItem onClick={() => handleClick('Guess the riddle! A new one appears every day. Think outside the box, or inside the box...')}>How to Play</DropdownItem>
           <DropdownItem onClick={() => handleClick('Website created in Dublin, Ireland. For enquiries, email - wriddledaily@gmail.com')}>Credits</DropdownItem>
         </DropdownList>
