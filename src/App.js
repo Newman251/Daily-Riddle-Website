@@ -9,8 +9,8 @@ import Menu from './components/Menu.js';
 import SetLogo from './components/SetLogo.js';
 
 const riddles = [
-  { question: 'Take one out and scratch my head, I am now black but once was red. What am I?', answer: 'match' },
-  { question: 'If eleven plus two equals one, what does nine plus five equal? ', answer: 'two' },
+  { question: 'If eleven plus two equals one, what does nine plus seven equal? ', answer: 'four'||'4' },
+  { question: 'What is so fragile that saying its name breaks it?', answer: 'silence' },
   { question: 'Mike and Pat are in a desert. They both have packs on. Pat is dead. Mike, who is alive, has his pack open. Pat has his pack closed. An airplane is in the distance. What is in the packs? ', answer: 'parachute' },
   { question: 'What kind of coat is always wet when you put it on?  ', answer: 'paint' },
   { question: 'If a zookeeper had 100 pairs of animals in her zoo, and two pairs of babies are born for each one of the original animals, then (sadly) 23 animals dont survive, how many animals do you have left in total? ', answer: '977' },
@@ -50,11 +50,11 @@ const App = () =>
         ? Number(localStorage.getItem("guessCount"))
         : 1
     );
-    // Create local storage for answer
-    const [answer, setAnswer] = useState(
-      localStorage.getItem("answer")
-        ? localStorage.getItem("answer")
-        : ""
+    // Create local storage for the date
+    const [date, setDate] = useState(
+      localStorage.getItem("date")
+        ? localStorage.getItem("date")
+        : calendarDate
     );
     const [myip,setIP] = useState('');
     const [mycity,setCity] = useState('');
@@ -104,22 +104,22 @@ useEffect(()=>{
 
 const checkAnswer = useCallback((event) => {
   event.preventDefault();
+  // Check if the local storage date is not the same as the current date
+  if (date !== calendarDate) {
+    // Set the local storage date to the current date
+    setDate(calendarDate);
+    // Restart the guess count
+    setGuess(1);
+    localStorage.setItem("guessCount", 1);
+  }
   // Search the entire input string to see if the answer is contained anywhere within it
   if (inputValue.toLowerCase().includes(currentAnswer)) {
+    // Get guess count from local storage
     setIsCorrect(true);
     setCorrectGuess(guess)
     setGuess(1);
     localStorage.setItem("guessCount", 1);
   } else {
-    // Check if the local storage answer is not the same as the current answer
-    if (answer !== currentAnswer) {
-      // Set the guess count to 1
-      setGuess(1);
-      localStorage.setItem("guessCount", 1);
-      // Set the local storage answer to the current answer
-      setAnswer(currentAnswer);
-      localStorage.setItem("answer", currentAnswer);
-    }
     setGuess(guess + 1);
     localStorage.setItem("guessCount", guess + 1);
   }
@@ -128,7 +128,7 @@ const checkAnswer = useCallback((event) => {
   setInputValue("");
   addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
 
-  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, answer]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, date]);
 
   // Function so that when the enter key is pressed, the answer is submitted
 useEffect(() => {
@@ -197,7 +197,7 @@ const URLStyle = styled.h1`
       <Menu />
       <SetLogo />
       <URLStyle>wriddle.net</URLStyle>
-      {/* <Timer>Time until next riddle: {hours}:{minutes}:{seconds}</Timer> */}
+      <Timer>Time until next riddle: {hours}:{minutes}:{seconds}</Timer>
         {!isCorrect ? ( <><><Text id="text"><Italics>{currentRiddle}</Italics></Text><p><input
         type="text"
         value={inputValue}
