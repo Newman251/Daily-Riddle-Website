@@ -2,12 +2,12 @@ import './App.css';
 import styled from 'styled-components';
 import React, { useState, useEffect, useCallback } from 'react';
 import Correct from './components/Correct';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc} from "firebase/firestore";
 import { getDb } from "./services/db.mjs"
 import axios from 'axios';
-import Menu from './components/Menu.js';
 import SetLogo from './components/SetLogo.js';
-// import Leaderboard from './components/Leaderboard';
+import Buttons from './components/Buttons.js';
+
 
 const riddles = [
   { question: 'If eleven plus two equals one, what does nine plus seven equal? ', answer: 'four'||'4' },
@@ -45,7 +45,7 @@ const App = () =>
     const [inputValue, setInputValue] = useState();
     const [isCorrect, setIsCorrect] = useState();
     const calendarDate = currentDate.toLocaleDateString();
-    const [correctGuess, setCorrectGuess] = useState();
+    const [setCorrectGuess] = useState();
     const [guess, setGuess] = useState(
       localStorage.getItem("guessCount")
         ? Number(localStorage.getItem("guessCount"))
@@ -129,7 +129,7 @@ const checkAnswer = useCallback((event) => {
   setInputValue("");
   addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
 
-  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, date]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, date, setGuess, setCorrectGuess]);
 
   // Function so that when the enter key is pressed, the answer is submitted
 useEffect(() => {
@@ -190,13 +190,13 @@ const URLStyle = styled.h1`
   margin-top: 0em;
 `;
 
+
   return (
     // Create a div with class name App which contains a text box which you write to
     // and a button which you click to submit the text box contents
     // Add a text box above the button
     <div className="App">
-      {/* <Leaderboard /> */}
-      <Menu />
+      <Buttons />
       <SetLogo />
       <URLStyle>wriddle.net</URLStyle>
       <Timer>Time until next riddle: {hours}:{minutes}:{seconds}</Timer>
@@ -215,7 +215,7 @@ const URLStyle = styled.h1`
           background: 'papayawhip',
           border: '2px solid black',
           borderRadius: '20px'
-        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>{currentPrompt}</Timer></>) : <><Correct /><Timer>Guess Count: {correctGuess}</Timer></> }
+        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>{currentPrompt}</Timer></>) : <><Correct /></> }
     </div>
   );
 }

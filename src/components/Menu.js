@@ -9,17 +9,16 @@ const DropdownContainer = styled.div`
   font-weight: 1000;
   position: relative;
   display: inline-block;
-  
 `;
 
 const DropdownButton = styled.button`
   display: inline-block;
-  margin-left: 17em;
+  margin-left: 12em;
   margin-top: 0.5em;
   size: 100%;
   background-color: transparent;
   border: 1px solid transparent;
-  font-size: 2.2em;
+  font-size: 2.4em;
 `;
 
 const DropdownList = styled.ul`
@@ -36,8 +35,6 @@ const DropdownList = styled.ul`
     border: 0.1px solid #ccc;
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-
-
 `;
 
 const DropdownItem = styled.li`
@@ -45,6 +42,7 @@ const DropdownItem = styled.li`
   &:hover {
     background-color: #f2f2f2;
   }
+  
 `;
 
 // Style the Icon
@@ -57,7 +55,7 @@ const StyledIcon = styled(Icon)`
 const PopupContainer = styled.div`
     position: absolute;
     top: 500%;
-    left: 50%;
+    left: 40%;
     transform: translate(-50%, -50%);
     z-index: 1;
     display: flex;
@@ -69,7 +67,7 @@ const PopupContainer = styled.div`
     border: 0.1px solid #ccc;
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    padding: 10em;
+    padding: 4em;
 `;
 
 // Styled the button
@@ -86,6 +84,7 @@ const Button = styled.button`
     &:hover {
         background-color: #f2f2f2;
     }
+    
 `;
 
 // Styled p
@@ -122,7 +121,7 @@ function Menu() {
       </DropdownButton>
       {showMenu && (
         <DropdownList>
-          <DropdownItem onClick={() => handleClick('Settings yet to be implemented. Newcastle are shite and will lose to utd in the final.')}>Settings</DropdownItem>
+          <DropdownItem onClick={() => handleClick('Settings yet to be implemented. If you have any suggestions, email wriddledaily@gmail.com')}>Settings</DropdownItem>
           <DropdownItem onClick={() => handleClick('Guess the riddle! A new one appears every day. Think outside the box, or inside the box...')}>How to Play</DropdownItem>
           <DropdownItem onClick={() => handleClick('Website created in Dublin, Ireland. For enquiries, email - wriddledaily@gmail.com')}>Credits</DropdownItem>
         </DropdownList>
