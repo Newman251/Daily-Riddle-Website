@@ -19,17 +19,16 @@ const Leaderboard = () => {
     const doc_refs = await getDocs(collection(getDb(), "leaderboard"))
     console.log("Gotlboard")
 
-    // const res = []
-
     // Print the contents of each ip
     doc_refs.forEach(users => {
         console.log(users.data())
-        setNames(names => [...names, users.data().name.toString()+": "+users.data().time.toString()])
+        setNames(names => [...names, users.data().name.toString()])
         // Read each value in the collection
         console.log(users.data().name)
         console.log(users.data().time.toString())
         // Print the size of the collection
         console.log("Size of collection: ", doc_refs.size)
+        
     })
 }
 
@@ -49,7 +48,7 @@ const Leaderboard = () => {
     border: 0.1px solid #ccc;
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    padding: 5em;
+    padding: 2em;
 `;
 
 // Style the Icon

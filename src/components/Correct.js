@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Leaderboard from './Leaderboard';
-// import Top from './Top';
 
 const Correct = () => {
 
@@ -40,7 +39,6 @@ color: #36454f;
   return (
     <div>
       <Title>You got it!!</Title>
-        {/* <Top/> */}
       <StyledButton onClick={shareLink}>Share the riddle!</StyledButton>
       <Leaderboard />
     </div>

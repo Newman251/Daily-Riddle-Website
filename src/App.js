@@ -2,11 +2,12 @@ import './App.css';
 import styled from 'styled-components';
 import React, { useState, useEffect, useCallback } from 'react';
 import Correct from './components/Correct';
-import { collection, addDoc} from "firebase/firestore";
+import { collection, addDoc, getDocs, deleteDoc} from "firebase/firestore";
 import { getDb } from "./services/db.mjs"
 import axios from 'axios';
 import SetLogo from './components/SetLogo.js';
 import Buttons from './components/Buttons.js';
+import Top from './components/Top.js';
 
 
 const riddles = [
@@ -14,6 +15,7 @@ const riddles = [
   { question: 'What is so fragile that saying its name breaks it?', answer: 'silence' },
   { question: 'Mike and Pat are in a desert. They both have packs on. Pat is dead. Mike, who is alive, has his pack open. Pat has his pack closed. What is in the packs? ', answer: 'parachute' },
   { question: 'If a zookeeper had 100 pairs of animals in her zoo, and two pairs of babies are born for each one of the original animals, then (sadly) 23 animals dont survive, how many animals do you have left in total? ', answer: '977' },
+  { question: 'Follower of man, Dark as night, A trained Choreographer, Comes after light. What am I?  ', answer: 'shadow' },
   { question: 'What kind of coat is always wet when you put it on?  ', answer: 'paint' },
   { question: 'What runs, but never walks. Murmurs, but never talks. Has a bed, but never sleeps. And has a mouth, but never eats?  ', answer: 'river' },
   { question: 'Two girls were born to the same mother, on the same day, at the same time, in the same month, and in the same year—but theyre not twins. How is this possible? ', answer: 'triplets' },
@@ -103,6 +105,29 @@ useEffect(()=>{
 },[])
 
 
+// Wrap the clearAll function in a callback
+const clearAll = useCallback(async () => {
+  console.log("Finding all")
+  const doc_refs = await getDocs(collection(getDb(), "leaderboard"))
+  console.log("Gotlboard")
+
+    // Get the answer column from the leaderboard collection
+  const answer = doc_refs.docs.map(doc => doc.data().answer)
+  // Log the first answer
+  console.log(answer[0])
+  // Check if the answer is not the same as the current answer
+  if (answer[0] !== currentAnswer) {
+    // Delete all documents in the leaderboard collection
+    const querySnapshot = await getDocs(collection(getDb(), "leaderboard"));
+    querySnapshot.forEach((doc) => {
+      deleteDoc(doc.ref);
+    });
+    console.log("Deleted all")
+  }
+}, [currentAnswer]);
+
+
+
 const checkAnswer = useCallback((event) => {
   event.preventDefault();
   // Check if the local storage date is not the same as the current date
@@ -115,11 +140,18 @@ const checkAnswer = useCallback((event) => {
   }
   // Search the entire input string to see if the answer is contained anywhere within it
   if (inputValue.toLowerCase().includes(currentAnswer)) {
+
+    // Check answer in the leaderboard collection
+    clearAll();
+
     // Get guess count from local storage
     setIsCorrect(true);
     setCorrectGuess(guess)
     setGuess(1);
     localStorage.setItem("guessCount", 1);
+    
+
+
   } else {
     setGuess(guess + 1);
     localStorage.setItem("guessCount", guess + 1);
@@ -129,7 +161,7 @@ const checkAnswer = useCallback((event) => {
   setInputValue("");
   addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
 
-  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, date, setGuess, setCorrectGuess]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, date, setGuess, setCorrectGuess, clearAll]);
 
   // Function so that when the enter key is pressed, the answer is submitted
 useEffect(() => {
@@ -215,7 +247,7 @@ const URLStyle = styled.h1`
           background: 'papayawhip',
           border: '2px solid black',
           borderRadius: '20px'
-        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>{currentPrompt}</Timer></>) : <><Correct /></> }
+        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>{currentPrompt}</Timer></>) : <><Top time={timeLeft} answer={currentAnswer}/><Correct /></> }
     </div>
   );
 }

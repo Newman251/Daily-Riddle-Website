@@ -24,7 +24,7 @@ const DropdownButton = styled.button`
 const DropdownList = styled.ul`
     position: absolute;
     top: 80%;
-    right: 0;
+    left: 24em;
     z-index: 0.5;
     display: flex;
     flex-direction: column;
