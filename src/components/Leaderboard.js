@@ -103,7 +103,7 @@ const StyledH1 = styled.h1`
       </LeaderboardButton>
       {showLeaderboards && (
         <PopupContainer>
-          <><StyledH1>Top Wriddlers:</StyledH1> Coming soon!<p>
+          <><StyledH1>Top Wriddlers:</StyledH1><p>
             {names.map((name, index) => (
               <p>{index + 1}. {name}</p>
             ))}
