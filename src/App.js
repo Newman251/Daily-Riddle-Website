@@ -140,6 +140,7 @@ const checkAnswer = useCallback((event) => {
   }
   // Search the entire input string to see if the answer is contained anywhere within it
   if (inputValue.toLowerCase().includes(currentAnswer)) {
+    addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
 
     // Check answer in the leaderboard collection
     clearAll();
@@ -155,11 +156,11 @@ const checkAnswer = useCallback((event) => {
   } else {
     setGuess(guess + 1);
     localStorage.setItem("guessCount", guess + 1);
+    addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
   }
 
   setCurrentPrompt('Keep Guessing!');
   setInputValue("");
-  addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
 
   }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, date, setGuess, setCorrectGuess, clearAll]);
 
