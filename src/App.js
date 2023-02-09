@@ -16,8 +16,8 @@ const riddles = [
   { question: 'Mike and Pat are in a desert. They both have packs on. Pat is dead. Mike, who is alive, has his pack open. Pat has his pack closed. What is in the packs? ', answer: 'parachute' },
   { question: 'If a zookeeper had 100 pairs of animals in her zoo, and two pairs of babies are born for each one of the original animals, then (sadly) 23 animals dont survive, how many animals do you have left in total? ', answer: '977' },
   { question: 'Follower of man, Dark as night, A trained Choreographer, Comes after light. What am I?  ', answer: 'shadow' },
-  { question: 'What kind of coat is always wet when you put it on?  ', answer: 'paint' },
   { question: 'What runs, but never walks. Murmurs, but never talks. Has a bed, but never sleeps. And has a mouth, but never eats?  ', answer: 'river' },
+  { question: 'What kind of coat is always wet when you put it on?  ', answer: 'paint' },
   { question: 'Two girls were born to the same mother, on the same day, at the same time, in the same month, and in the same year—but theyre not twins. How is this possible? ', answer: 'triplets' },
   { question: 'What is 3/7 chicken, 2/3 cat, and 1/2 goat? ', answer: 'chicago' },
   { question: 'What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?', answer: 'r' },
@@ -59,8 +59,15 @@ const App = () =>
         ? localStorage.getItem("date")
         : calendarDate
     );
+    // Local storage for is correct
+    const [setCorrect] = useState(
+      localStorage.getItem("isCorrect")
+        ? localStorage.getItem("isCorrect")
+        : false
+    );
     const [myip,setIP] = useState('');
     const [mycity,setCity] = useState('');
+    const [country_name,setCountry] = useState('');
     // Declare seconds, minutes, and hours as state variables, with a 0 before it if it is a single digit
     const seconds = timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60;
     const minutes = Math.floor(timeLeft / 60) % 60 < 10 ? `0${Math.floor(timeLeft / 60) % 60}` : Math.floor(timeLeft / 60) % 60;
@@ -97,6 +104,7 @@ const getData = async()=>{
     console.log(res.data);
     setIP(res.data.IPv4)
     setCity(res.data.city)
+    setCountry(res.data.country_name)
 }
 
 useEffect(()=>{
@@ -140,7 +148,7 @@ const checkAnswer = useCallback((event) => {
   }
   // Search the entire input string to see if the answer is contained anywhere within it
   if (inputValue.toLowerCase().includes(currentAnswer)) {
-    addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
+    addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber, country: country_name});
 
     // Check answer in the leaderboard collection
     clearAll();
@@ -151,18 +159,20 @@ const checkAnswer = useCallback((event) => {
     setGuess(1);
     localStorage.setItem("guessCount", 1);
     
-
+    // Store local storage is correct as true
+    setCorrect(true);
+    localStorage.setItem("isCorrect", true);
 
   } else {
     setGuess(guess + 1);
     localStorage.setItem("guessCount", guess + 1);
-    addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber});
+    addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber, country: country_name});
   }
 
   setCurrentPrompt('Keep Guessing!');
   setInputValue("");
 
-  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, date, setGuess, setCorrectGuess, clearAll]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, date, setGuess, setCorrectGuess, clearAll, country_name, setCorrect]);
 
   // Function so that when the enter key is pressed, the answer is submitted
 useEffect(() => {
@@ -176,6 +186,14 @@ useEffect(() => {
     document.removeEventListener('keydown', handleKeyDown);
   }
 }, [checkAnswer]);
+
+// Use Effect to check if local storage is correct is true and it is the same date as the current date
+useEffect(() => {
+  if (localStorage.getItem("isCorrect") === "true" && date === calendarDate) {
+    console.log("Correct")
+    setIsCorrect(true);
+  }
+}, [date, calendarDate]);
 
       // Style submit button to be red curve the edges
 const Submit = styled.button`

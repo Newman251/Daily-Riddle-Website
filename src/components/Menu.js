@@ -24,7 +24,7 @@ const DropdownButton = styled.button`
 const DropdownList = styled.ul`
     position: absolute;
     top: 80%;
-    left: 24em;
+    left: 22em;
     z-index: 0.5;
     display: flex;
     flex-direction: column;
@@ -55,8 +55,7 @@ const StyledIcon = styled(Icon)`
 const PopupContainer = styled.div`
     position: absolute;
     top: 500%;
-    left: 40%;
-    transform: translate(-50%, -50%);
+    transform: translate(-25%, -50%);
     z-index: 1;
     display: flex;
     flex-direction: column;
@@ -72,7 +71,6 @@ const PopupContainer = styled.div`
 
 // Styled the button
 const Button = styled.button`
-    background-color: Gray;
     border: 1px solid transparent;
     font-size: 5em;
     font-weight: 1000;
@@ -81,9 +79,6 @@ const Button = styled.button`
     border-radius: 3px;
     margin: 1em 1em;
     cursor: pointer;
-    &:hover {
-        background-color: #f2f2f2;
-    }
     
 `;
 
