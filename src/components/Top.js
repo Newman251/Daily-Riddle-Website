@@ -45,7 +45,7 @@ const handleChange = (e) => {
   useEffect(() => {
     const checkSize = async () => {
       const docRefs = await getDocs(collection(getDb(), "leaderboard"));
-      if (docRefs.size < 5) {
+      if (docRefs.size < 4) {
         setShowPrompt(true);
       }
     };

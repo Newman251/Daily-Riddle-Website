@@ -7,6 +7,7 @@ import { getDb } from "../services/db.mjs"
 const Leaderboard = () => {
   const [names, setNames] = useState([]);
   const [showLeaderboards, setShowLeaderboards] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClick = () => {
     setNames([]);
@@ -15,86 +16,106 @@ const Leaderboard = () => {
   };
 
   const findAll = async () => {
-    console.log("Finding all")
+    setLoading(true);
     const doc_refs = await getDocs(collection(getDb(), "leaderboard"))
-    console.log("Gotlboard")
 
-    // Print the contents of each ip
-    doc_refs.forEach(users => {
-        console.log(users.data())
-        setNames(names => [...names, users.data().name.toString()])
-        // Read each value in the collection
-        console.log(users.data().name)
-        console.log(users.data().time.toString())
-        // Print the size of the collection
-        console.log("Size of collection: ", doc_refs.size)
-        
-    })
+    // Get a an array of each time in the leaderboard
+    const times = doc_refs.docs.map(doc => doc.data().time)
+    // Get a an array of each name in the leaderboard
+    const name = doc_refs.docs.map(doc => doc.data().name)
+
+    // Sort the names array in order of the times array
+    for (let i = 0; i < times.length; i++) {
+      for (let j = 0; j < times.length; j++) {
+        if (times[i] > times[j]) {
+          let temp = times[i];
+          times[i] = times[j];
+          times[j] = temp;
+          temp = name[i];
+          name[i] = name[j];
+          name[j] = temp;
+        }
+      }
+    }
+  
+    // Use setNames to set the names array to the state
+    setNames(name)
+
+    console.log("Gotlboard")
+    setLoading(false);
+
 }
 
-
-  const PopupContainer = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    background-color: #f5f5dc;
-    border: 0.1px solid #ccc;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    padding: 2em;
+// Style the popup container and make it wider
+const PopupContainer = styled.div`
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+z-index: 1;
+flex-direction: column;
+padding: 0;
+margin: 0;
+list-style: none;
+background-color: #f5f5dc;
+border: 0.1px solid #ccc;
+box-shadow: 0 2px 18px rgba(0, 0, 0, 0.15);
+padding: 2em;
 `;
 
 // Style the Icon
 const StyledIcon = styled(Icon)`
-    font-size: 2em;
-    background-color: transparent;
-    color: #36454f;
+font-size: 2em;
+background-color: transparent;
+color: #36454f;
 `;
 
 // Leaderboard button on the left side of the screen, inline with the menu button
 const LeaderboardButton = styled.button`
-    display: inline-block;
-    background-color: transparent;
-    border: 1px solid transparent;
-    font-size: 1em;
-    margin: 1em 1em;
-    top: 0.1em;
-    right: 77%;
+display: inline-block;
+background-color: transparent;
+border: 1px solid transparent;
+font-size: 1em;
+margin: 1em 1em;
+top: 0.1em;
+right: 77%;
 
 `;
 
 // Styled the button
 const CloseButton = styled.button`
-    background-color: Gray;
-    border: 1px solid transparent;
-    font-size: 2em;
-    font-weight: 5;
-    color: #36454f;
-    padding: 0.25em 0.5em;
-    border-radius: 5px;
-    margin: 1em 1em;
-    cursor: pointer;
-    &:hover {
-        background-color: #f2f2f2;
-    }  
+background-color: Gray;
+border: 1px solid transparent;
+font-size: 2em;
+font-weight: 5;
+color: #36454f;
+padding: 0.25em 0.5em;
+border-radius: 5px;
+margin: 1em 1em;
+cursor: pointer;
+&:hover {
+    background-color: #f2f2f2;
+}  
 `;
 
 // Styled h1 for the leaderboard
 const StyledH1 = styled.h1`
-    font-size: 2em;
-    color: #36454f;
-    padding: 1em 1em;
-    border-radius: 20px;
-    margin: 1em 1em;
+font-size: 1em;
+color: #36454f;
+padding: 3em 10em;
+border-radius: 20px;
+margin: 1em 1em;
 `;
 
+// Stype the p tag to make it thicker
+const StyledP = styled.p`
+font-size: 1em;
+color: #36454f;
+border-radius: 2px;
+margin: 1em 1em;
+font-weight: 500;
+font-family: 'Courier New', Courier, monospace;
+`;
 
   return (
     <div>
@@ -103,9 +124,14 @@ const StyledH1 = styled.h1`
       </LeaderboardButton>
       {showLeaderboards && (
         <PopupContainer>
-          <><StyledH1>Top Wriddlers:</StyledH1><p>
+          <><StyledH1>Top Wriddlers</StyledH1><p>
+              {loading && 
+              <StyledP>
+                Loading...
+              </StyledP>
+                }
             {names.map((name, index) => (
-              <p>{index + 1}. {name}</p>
+              <StyledP>{index + 1}. {name}</StyledP>
             ))}
           </p></>
           <CloseButton onClick={handleClick}>Close</CloseButton>
@@ -116,3 +142,4 @@ const StyledH1 = styled.h1`
 };
 
 export default Leaderboard;
+
