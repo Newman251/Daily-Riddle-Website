@@ -45,7 +45,7 @@ const handleChange = (e) => {
   useEffect(() => {
     const checkSize = async () => {
       const docRefs = await getDocs(collection(getDb(), "leaderboard"));
-      if (docRefs.size < 4) {
+      if (docRefs.size < 10) {
         setShowPrompt(true);
       }
     };
@@ -75,7 +75,7 @@ const handleChange = (e) => {
             padding: '6em',
           }
         }>
-          <StyledH1>Congrats! You are a top five riddler today, enter your name to feature on the leaderboard!</StyledH1>
+          <StyledH1>Congrats! You are a top 10 riddler today, enter your name to feature on the leaderboard!</StyledH1>
           <p>
             <input
               type="text"
