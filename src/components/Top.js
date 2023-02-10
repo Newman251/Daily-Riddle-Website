@@ -39,13 +39,15 @@ const handleChange = (e) => {
     event.preventDefault();
     // Add the username to the leaderboard collection
     setShowPrompt(false);
-    await addDoc(collection(getDb(), "leaderboard"), { name: username, time: time, answer: answer });
+    if (username !== '') {
+      await addDoc(collection(getDb(), "leaderboard"), { name: username, time: time, answer: answer });
+    }
   };
 
   useEffect(() => {
     const checkSize = async () => {
       const docRefs = await getDocs(collection(getDb(), "leaderboard"));
-      if (docRefs.size < 10) {
+      if (docRefs.size < 5) {
         setShowPrompt(true);
       }
     };
@@ -75,7 +77,7 @@ const handleChange = (e) => {
             padding: '6em',
           }
         }>
-          <StyledH1>Congrats! You are a top 10 riddler today, enter your name to feature on the leaderboard!</StyledH1>
+          <StyledH1>Congrats! You are a top 5 riddler today, enter your name to feature on the leaderboard!</StyledH1>
           <p>
             <input
               type="text"
