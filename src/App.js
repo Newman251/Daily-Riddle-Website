@@ -16,8 +16,6 @@ const riddles = [
   { question: 'I am small, and round, with a touch of bark. From a tree, I am plucked, before I make my mark. What am I, a piece of tree, that seals in order to free? ', answer: 'cork' },
   { question: 'When you need me, you throw me away. When you don’t need me, you bring me back. What am I? ', answer: 'anchor' },
   { question: 'I am vast and billowing, a cloth so grand, I help my owner take command. What am I, a cloth so light, that helps you take flight? ', answer: 'sail' },
-  { question: 'What English word has three consecutive double letters? ', answer: 'bookkeeper' },
-  { question: 'What is 3/7 chicken, 2/3 cat, and 1/2 goat? ', answer: 'chicago' },
   { question: 'What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?', answer: 'r' },
   { question: 'What kind of coat is always wet when you put it on?  ', answer: 'paint' },
   { question: 'Two girls were born to the same mother, on the same day, at the same time, in the same month, and in the same year—but theyre not twins. How is this possible? ', answer: 'triplets' },
@@ -26,7 +24,10 @@ const riddles = [
   { question: 'What disappears as soon as you say its name? ', answer: 'silence' },
   { question: 'Which word becomes shorter when you add 2 letters to it?', answer: 'short' },
   { question: 'What type of cheese is made backward?', answer: 'edam' },
-  { question: 'I can be cracked, I can be made. I can be told, I can be played. What am I?', answer: 'joke' }
+  { question: 'I can be cracked, I can be made. I can be told, I can be played. What am I?', answer: 'joke' },
+  { question: 'What is 3/7 chicken, 2/3 cat, and 1/2 goat? ', answer: 'chicago' },
+  { question: 'What English word has three consecutive double letters? ', answer: 'bookkeeper' }
+
 ];
 
 const App = () => 
@@ -38,12 +39,12 @@ const App = () =>
     const hoursLeft = 24 - currentHour - 1;
     const secondsLeft = 60 - currentSecond;
     const minutesLeft = 60 - currentMinute - 1;
-    const currentDay = currentDate.getDay() - 4;
+    const currentDay = currentDate.getDay()+3;
     const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
     const [currentRiddle] = useState(riddles[currentDay % riddles.length].question);
     const [currentAnswer] = useState(riddles[currentDay % riddles.length].answer);
     const [currentPrompt, setCurrentPrompt] = useState('');
-    const riddleNumber = currentDate.getDay() + 14;
+    const riddleNumber = currentDate.getDay() + 21;
     const [inputValue, setInputValue] = useState();
     const [isCorrect, setIsCorrect] = useState();
     const calendarDate = currentDate.toLocaleDateString();
