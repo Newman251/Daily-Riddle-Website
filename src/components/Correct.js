@@ -5,7 +5,7 @@ import Leaderboard from './Leaderboard';
 const Correct = () => {
 
   const currentDate = new Date();
-  const currentDay = currentDate.getDay() + 14;
+  const currentDay = currentDate.getDay() + 21;
 
   const shareLink = () => {
     navigator.share({
