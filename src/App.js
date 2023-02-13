@@ -11,12 +11,16 @@ import Top from './components/Top.js';
 
 
 const riddles = [
-  { question: 'Follower of man, Dark as night, A trained Choreographer, Comes after light. What am I?  ', answer: 'shadow' },
-  { question: 'What runs, but never walks. Murmurs, but never talks. Has a bed, but never sleeps. And has a mouth, but never eats?  ', answer: 'river' },
-  { question: 'I am small, and round, with a touch of bark. From a tree, I am plucked, before I make my mark. What am I, a piece of tree, that seals in order to free? ', answer: 'cork' },
   { question: 'When you need me, you throw me away. When you don’t need me, you bring me back. What am I? ', answer: 'anchor' },
-  { question: 'I am vast and billowing, a cloth so grand, I help my owner take command. What am I, a cloth so light, that helps you take flight? ', answer: 'sail' },
   { question: 'What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?', answer: 'r' },
+  { question: 'I am vast and billowing, a cloth so grand, I help my owner take command. What am I, a cloth so light, that helps you take flight? ', answer: 'sail' },
+  { question: 'Between two or more, I bring you together or cause you to soar. Light and fun, or serious and deep, I help you connect, or put you to sleep. What am I? ', answer: 'conversation' },
+  { question: 'A motion made with ease. Strong, or gentle, as you please. Mix ingredients or stir, I can also signal, that its time to concur. What am I? ', answer: 'shake' },
+  { question: 'Lift or hold, never get old, a force thats felt, with each passing day, a crucial factor, in every way. What am I, this thing you cant see, a necessary part, of you and me? ', answer: 'weight' },
+  { question: 'Something to find, a test of the mind. What am I, this enigma so fine, a source of confusion, yet also a sign? ', answer: 'riddle' },
+  { question: 'So divine, its a pleasure to swine, Its color is rich, sometimes deep and bold, Sought after, by both young and old. What am I in your figure-like glass, that can make your day pass? ', answer: 'wine' },
+  { question: 'I am small and round, often fastened tight, I play a big role in making things right. With just one press, I bring relief, Making life much easier, like a sweet reprieve. What am I?', answer: 'button' },
+  { question: 'Holding thoughts with grace, in a special place. A gentle touch or flipped with flair and I’ll show you what’s there. What am I?', answer: 'page' },
   { question: 'What kind of coat is always wet when you put it on?  ', answer: 'paint' },
   { question: 'Two girls were born to the same mother, on the same day, at the same time, in the same month, and in the same year—but theyre not twins. How is this possible? ', answer: 'triplets' },
   { question: 'A bus driver goes the wrong way on a one-way street. He passes the cops, but they don’t stop him. Why? ', answer: 'walk' },
