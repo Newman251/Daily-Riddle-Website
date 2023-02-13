@@ -43,7 +43,7 @@ const App = () =>
     const hoursLeft = 24 - currentHour - 1;
     const secondsLeft = 60 - currentSecond;
     const minutesLeft = 60 - currentMinute - 1;
-    const currentDay = currentDate.getDay()+3;
+    const currentDay = currentDate.getDay();
     const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
     const [currentRiddle] = useState(riddles[currentDay % riddles.length].question);
     const [currentAnswer] = useState(riddles[currentDay % riddles.length].answer);
