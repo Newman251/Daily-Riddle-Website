@@ -15,7 +15,7 @@ const riddles = [
   { question: 'What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?', answer: 'r' },
   { question: 'I am vast and billowing, a cloth so grand, I help my owner take command. What am I, a cloth so light, that helps you take flight? ', answer: 'sail' },
   { question: 'Between two or more, I bring you together or cause you to soar. Light and fun, or serious and deep, I help you connect, or put you to sleep. What am I? ', answer: 'conversation' },
-  { question: 'A motion made with ease. Strong, or gentle, as you please. Mix ingredients or stir, I can also signal, that its time to concur. What am I? ', answer: 'shake' },
+  { question: 'A motion made with ease. Strong, or gentle, as you please. Mix or stir, I can also signal, that its time to concur. What am I? ', answer: 'shake' },
   { question: 'Lift or hold, never get old, a force thats felt, with each passing day, a crucial factor, in every way. What am I, this thing you cant see, a necessary part, of you and me? ', answer: 'weight' },
   { question: 'Something to find, a test of the mind. What am I, this enigma so fine, a source of confusion, yet also a sign? ', answer: 'riddle' },
   { question: 'So divine, its a pleasure to swine, Its color is rich, sometimes deep and bold, Sought after, by both young and old. What am I in your figure-like glass, that can make your day pass? ', answer: 'wine' },
@@ -163,30 +163,26 @@ const clearAll = useCallback(async () => {
 
 const checkAnswer = useCallback((event) => {
   event.preventDefault();
-  // Check if the local storage date is not the same as the current date
-  if (date !== calendarDate) {
-    // Set the local storage date to the current date
-    setDate(calendarDate);
-    // Restart the guess count
-    setGuess(1);
-    localStorage.setItem("guessCount", 1);
-  }
+
+  // Check answer in the leaderboard collection
+  clearAll();
+
   // Search the entire input string to see if the answer is contained anywhere within it
   if (inputValue.toLowerCase().includes(currentAnswer)) {
+
+    
+
     addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber, country: country_name});
 
-    // Check answer in the leaderboard collection
-    clearAll();
-
-    // Get guess count from local storage
     setIsCorrect(true);
-    setCorrectGuess(guess)
-    setGuess(1);
-    localStorage.setItem("guessCount", 1);
     
     // Store local storage is correct as true
     setCorrect(1);
     localStorage.setItem("isCorrect", 1);
+
+    // Set Guess Count to 1
+    setGuess(1);
+    localStorage.setItem("guessCount", 1);
 
   } else {
     setGuess(guess + 1);
