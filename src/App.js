@@ -52,14 +52,14 @@ const App = () =>
     const [inputValue, setInputValue] = useState();
     const [isCorrect, setIsCorrect] = useState();
     const calendarDate = currentDate.toLocaleDateString();
-    const [setCorrectGuess] = useState();
+    // const [setCorrectGuess] = useState();
     const [guess, setGuess] = useState(
       localStorage.getItem("guessCount")
         ? Number(localStorage.getItem("guessCount"))
         : 1
     );
     // Create local storage for the date
-    const [date, setDate] = useState(
+    const [date] = useState(
       localStorage.getItem("date")
         ? localStorage.getItem("date")
         : calendarDate
@@ -193,7 +193,7 @@ const checkAnswer = useCallback((event) => {
   setCurrentPrompt('Keep Guessing!');
   setInputValue("");
 
-  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds, date, setGuess, setCorrectGuess, clearAll, country_name, setCorrect]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds,  setGuess, clearAll, country_name, setCorrect]);
 
   // Function so that when the enter key is pressed, the answer is submitted
 useEffect(() => {
