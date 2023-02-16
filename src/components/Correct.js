@@ -4,7 +4,7 @@ import Leaderboard from './Leaderboard';
 
 const Correct = () => {
 
-  const currentDate = new Date();
+  const currentDate = new Date(new Date().toLocaleString('en', {timeZone: 'Europe/London'}));
   const currentDay = currentDate.getDay() + 21;
 
   const shareLink = () => {

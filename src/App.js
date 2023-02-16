@@ -25,7 +25,6 @@ const riddles = [
   { question: 'Two girls were born to the same mother, on the same day, at the same time, in the same month, and in the same year—but theyre not twins. How is this possible? ', answer: 'triplets' },
   { question: 'A bus driver goes the wrong way on a one-way street. He passes the cops, but they don’t stop him. Why? ', answer: 'walk' },
   { question: 'I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I? ', answer: 'echo' },
-  { question: 'What disappears as soon as you say its name? ', answer: 'silence' },
   { question: 'Which word becomes shorter when you add 2 letters to it?', answer: 'short' },
   { question: 'What type of cheese is made backward?', answer: 'edam' },
   { question: 'I can be cracked, I can be made. I can be told, I can be played. What am I?', answer: 'joke' },
@@ -36,7 +35,7 @@ const riddles = [
 
 const App = () => 
 {
-    const currentDate = new Date();
+    const currentDate = new Date(new Date().toLocaleString('en', {timeZone: 'Europe/London'}));
     const currentHour = currentDate.getHours();
     const currentMinute = currentDate.getMinutes();	
     const currentSecond = currentDate.getSeconds();
@@ -52,7 +51,6 @@ const App = () =>
     const [inputValue, setInputValue] = useState();
     const [isCorrect, setIsCorrect] = useState();
     const calendarDate = currentDate.toLocaleDateString();
-    // const [setCorrectGuess] = useState();
     const [guess, setGuess] = useState(
       localStorage.getItem("guessCount")
         ? Number(localStorage.getItem("guessCount"))
@@ -104,7 +102,9 @@ setInputValue(event.target.value);
 }
     
 //creating function to load ip address from the API
-const getData = async()=>{
+const getData = async() =>{
+      console.log("Hello")
+
     const res = await axios.get('https://geolocation-db.com/json/')
     console.log(res.data);
     setIP(res.data.IPv4)
@@ -138,27 +138,6 @@ const clearAll = useCallback(async () => {
     console.log("Deleted all")
   }
 }, [currentAnswer]);
-
-// UseEffect to check if gotit is 1 and if the date is not the same as the current date
-// useEffect(() => {
-//   if (gotit === 0 && date !== calendarDate) {
-//     // Set the local storage date to the current date
-//     setDate(calendarDate);
-//     localStorage.setItem("date", calendarDate);
-//     // Restart the guess count
-//     setGuess(0);
-//     localStorage.setItem("guessCount", 1);
-//   } else if (gotit === 1 && date === calendarDate) {
-//     // Say that isCorrect to true
-//     setIsCorrect(true);
-//     // Log gotit
-//   }
-//   console.log(gotit);
-//   // Log local storage isCorrect
-//   console.log(localStorage.getItem("isCorrect"));
-// }, [gotit, date, calendarDate]);
-
-
 
 
 const checkAnswer = useCallback((event) => {
