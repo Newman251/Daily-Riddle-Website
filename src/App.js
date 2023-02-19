@@ -11,13 +11,6 @@ import Top from './components/Top.js';
 
 
 const riddles = [
-  { question: 'When you need me, you throw me away. When you don’t need me, you bring me back. What am I? ', answer: 'anchor' },
-  { question: 'What is seen in the middle of March and April that can’t be seen at the beginning or end of either month?', answer: 'r' },
-  { question: 'I am vast and billowing, a cloth so grand, I help my owner take command. What am I, a cloth so light, that helps you take flight? ', answer: 'sail' },
-  { question: 'Between two or more, I bring you together or cause you to soar. Light and fun, or serious and deep, I help you connect, or put you to sleep. What am I? ', answer: 'conversation' },
-  { question: 'A motion made with ease. Strong, or gentle, as you please. Mix or stir, I can also signal, that its time to concur. What am I? ', answer: 'shake' },
-  { question: 'Lift or hold, never get old, a force thats felt, with each passing day, a crucial factor, in every way. What am I, this thing you cant see, a necessary part, of you and me? ', answer: 'weight' },
-  { question: 'Lose me once ill come back stronger, lose me twice ill leave forever, what am I? ', answer: 'tooth' },
   { question: 'I live for but a single breath. Any touch could spell my death. A rainbow spins within my eye. Make me right, and I can fly ', answer: 'bubble' },
   { question: 'I might come through your window, And Im often at the bar. Sometimes Im used to send your kids To die in lands afar. ', answer: 'draft' },
   { question: 'As a stone inside a tree, Ill help your words outlive thee. But if you push me as I stand, the more I move the less I am. What am I? ', answer: 'pencil' },
