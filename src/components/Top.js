@@ -4,22 +4,6 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 import { getDb } from "../services/db.mjs";
 
 const Top = ({ time, answer }) => {
-
-  // Styled the button
-  const CloseButton = styled.button`
-  background-color: Gray;
-  border: 1px solid transparent;
-  font-size: 2em;
-  font-weight: 5;
-  color: #36454f;
-  padding: 0.25em 0.5em;
-  border-radius: 5px;
-  margin: 1em 1em;
-  cursor: pointer;
-  &:hover {
-      background-color: #f2f2f2;
-  }  
-  `;
   
   // Styled h1 to change the font size
   const StyledH1 = styled.h1`
@@ -97,7 +81,17 @@ const handleChange = (e) => {
               }}
             />
           </p>
-          <CloseButton onClick={handleUsernameSubmit}>Enter</CloseButton>
+          <button onClick={handleUsernameSubmit} 
+          style = {{
+            background: 'Gray',
+            font:'3em',
+            color: '#36454f',
+            padding: '1em 4em',
+            border: '1px solid black',
+            borderRadius: '5px',
+            margin: '1em 1em'
+          }}
+          >Close</button>
         </div>
       )}
     </div>

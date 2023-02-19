@@ -9,28 +9,6 @@ import SetLogo from './components/SetLogo.js';
 import Buttons from './components/Buttons.js';
 import Top from './components/Top.js';
 
-
-const riddles = [
-  { question: 'I live for but a single breath. Any touch could spell my death. A rainbow spins within my eye. Make me right, and I can fly ', answer: 'bubble' },
-  { question: 'I might come through your window, And Im often at the bar. Sometimes Im used to send your kids To die in lands afar. ', answer: 'draft' },
-  { question: 'As a stone inside a tree, Ill help your words outlive thee. But if you push me as I stand, the more I move the less I am. What am I? ', answer: 'pencil' },
-  { question: 'Something to find, a test of the mind. What am I, this enigma so fine, a source of confusion, yet also a sign? ', answer: 'riddle' },
-  { question: 'You get me when you park in a place off limits. I live in a swamp. I m the one who ribbits. ', answer: 'toad' },
-  { question: 'So divine, its a pleasure to swine, Its color is rich, sometimes deep and bold, Sought after, by both young and old. What am I in your figure-like glass, that can make your day pass? ', answer: 'wine' },
-  { question: 'I am small and round, often fastened tight, I play a big role in making things right. With just one press, I bring relief, Making life much easier, like a sweet reprieve. What am I?', answer: 'button' },
-  { question: 'Holding thoughts with grace, in a special place. A gentle touch or flipped with flair and I’ll show you what’s there. What am I?', answer: 'page' },
-  { question: 'What kind of coat is always wet when you put it on?  ', answer: 'paint' },
-  { question: 'Two girls were born to the same mother, on the same day, at the same time, in the same month, and in the same year—but theyre not twins. How is this possible? ', answer: 'triplets' },
-  { question: 'A bus driver goes the wrong way on a one-way street. He passes the cops, but they don’t stop him. Why? ', answer: 'walk' },
-  { question: 'I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I? ', answer: 'echo' },
-  { question: 'Which word becomes shorter when you add 2 letters to it?', answer: 'short' },
-  { question: 'What type of cheese is made backward?', answer: 'edam' },
-  { question: 'I can be cracked, I can be made. I can be told, I can be played. What am I?', answer: 'joke' },
-  { question: 'What is 3/7 chicken, 2/3 cat, and 1/2 goat? ', answer: 'chicago' },
-  { question: 'What English word has three consecutive double letters? ', answer: 'bookkeeper' }
-
-];
-
 const App = () => 
 {
     const currentDate = new Date(new Date().toLocaleString('en', {timeZone: 'Europe/London'}));
@@ -42,8 +20,6 @@ const App = () =>
     const minutesLeft = 60 - currentMinute - 1;
     const currentDay = currentDate.getDay();
     const [timeLeft, setTimeLeft] = useState(hoursLeft * 60 * 60 + minutesLeft * 60 + secondsLeft);
-    const [currentRiddle] = useState(riddles[currentDay % riddles.length].question);
-    const [currentAnswer] = useState(riddles[currentDay % riddles.length].answer);
     const [currentPrompt, setCurrentPrompt] = useState('');
     const riddleNumber = currentDate.getDay() + 28;
     const [inputValue, setInputValue] = useState();
@@ -94,6 +70,27 @@ const App = () =>
       }
     }, [timeLeft, hoursLeft, minutesLeft, secondsLeft]);
 
+    const [currentRiddle, setCurrentRiddle] = useState('Loading Riddle...');
+    const [currentAnswer, setCurrentAnswer] = useState(' ');
+
+
+//  Read from the riddles collection and get the answer and riddle of riddle 'Number' 1
+    const getRiddle = useCallback(async () => {
+      const doc_refs = await getDocs(collection(getDb(), "riddles"))
+      // Check the number column and set the current riddle to the riddle of the current day and the current answer to the answer of the current day
+      doc_refs.forEach((doc) => {
+        if (doc.data().number === (currentDay+1)) {
+          setCurrentRiddle(doc.data().riddle);
+          setCurrentAnswer(doc.data().answer);
+        }
+      })
+    }, [currentDay]);
+
+    useEffect(() => {
+      getRiddle();
+    }, [getRiddle]);
+
+
 
 const handleChange = (event) => {
 setInputValue(event.target.value);
@@ -101,10 +98,8 @@ setInputValue(event.target.value);
     
 //creating function to load ip address from the API
 const getData = async() =>{
-      console.log("Hello")
 
     const res = await axios.get('https://geolocation-db.com/json/')
-    console.log(res.data);
     setIP(res.data.IPv4)
     setCity(res.data.city)
     setCountry(res.data.country_name)
@@ -118,14 +113,10 @@ useEffect(()=>{
 
 // Wrap the clearAll function in a callback
 const clearAll = useCallback(async () => {
-  console.log("Finding all")
   const doc_refs = await getDocs(collection(getDb(), "leaderboard"))
-  console.log("Gotlboard")
 
     // Get the answer column from the leaderboard collection
   const answer = doc_refs.docs.map(doc => doc.data().answer)
-  // Log the first answer
-  console.log(answer[0])
   // Check if the answer is not the same as the current answer
   if (answer[0] !== currentAnswer) {
     // Delete all documents in the leaderboard collection
@@ -133,7 +124,6 @@ const clearAll = useCallback(async () => {
     querySnapshot.forEach((doc) => {
       deleteDoc(doc.ref);
     });
-    console.log("Deleted all")
   }
 }, [currentAnswer]);
 
@@ -188,7 +178,6 @@ useEffect(() => {
 // Use Effect to check if local storage is correct is true and it is the same date as the current date
 useEffect(() => {
   if (localStorage.getItem("isCorrect") === "true" && date === calendarDate) {
-    console.log("Correct")
     setIsCorrect(true);
   }
 }, [date, calendarDate]);
