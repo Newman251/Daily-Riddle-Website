@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Icon } from '@iconify/react';
-// import menuRounded from '@iconify/icons-material-symbols/menu-rounded';
 import styled from 'styled-components';
 
 const DropdownContainer = styled.div`
@@ -24,7 +23,7 @@ const DropdownButton = styled.button`
 const DropdownList = styled.ul`
     position: absolute;
     top: 80%;
-    left: 22em;
+    left: 20em;
     z-index: 0.5;
     display: flex;
     flex-direction: column;
@@ -33,7 +32,7 @@ const DropdownList = styled.ul`
     list-style: none;
     background-color: light-gray;
     border: 0.1px solid #ccc;
-    border-radius: 2px;
+    border-radius: 15px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 `;
 
@@ -116,7 +115,7 @@ function Menu() {
       </DropdownButton>
       {showMenu && (
         <DropdownList>
-          <DropdownItem onClick={() => handleClick('Settings yet to be implemented. If you have any suggestions, email wriddledaily@gmail.com')}>Settings</DropdownItem>
+          <DropdownItem onClick={() => handleClick('Don\'t really need any settings really yet. If you have any suggestions, email wriddledaily@gmail.com')}>Settings</DropdownItem>
           <DropdownItem onClick={() => handleClick('Guess the riddle! A new one appears every day. Think outside the box, or inside the box...')}>How to Play</DropdownItem>
           <DropdownItem onClick={() => handleClick('Website created in Dublin, Ireland. For enquiries, email - wriddledaily@gmail.com')}>Credits</DropdownItem>
         </DropdownList>

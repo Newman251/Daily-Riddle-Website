@@ -2,7 +2,7 @@ import './App.css';
 import styled from 'styled-components';
 import React, { useState, useEffect, useCallback } from 'react';
 import Correct from './components/Correct';
-import { collection, addDoc, getDocs, deleteDoc} from "firebase/firestore";
+import { collection, addDoc, getDocs} from "firebase/firestore";
 import { getDb } from "./services/db.mjs"
 import axios from 'axios';
 import SetLogo from './components/SetLogo.js';
@@ -110,34 +110,11 @@ useEffect(()=>{
     getData()
 },[])
 
-
-// Wrap the clearAll function in a callback
-const clearAll = useCallback(async () => {
-  const doc_refs = await getDocs(collection(getDb(), "leaderboard"))
-
-    // Get the answer column from the leaderboard collection
-  const answer = doc_refs.docs.map(doc => doc.data().answer)
-  // Check if the answer is not the same as the current answer
-  if (answer[0] !== currentAnswer) {
-    // Delete all documents in the leaderboard collection
-    const querySnapshot = await getDocs(collection(getDb(), "leaderboard"));
-    querySnapshot.forEach((doc) => {
-      deleteDoc(doc.ref);
-    });
-  }
-}, [currentAnswer]);
-
-
 const checkAnswer = useCallback((event) => {
   event.preventDefault();
 
-  // Check answer in the leaderboard collection
-  clearAll();
-
   // Search the entire input string to see if the answer is contained anywhere within it
   if (inputValue.toLowerCase().includes(currentAnswer)) {
-
-    
 
     addDoc(collection(getDb(), "users"), {ip: myip, guesses: inputValue, city: mycity, answer: currentAnswer, guessCount: guess, time: `${hours}:${minutes}:${seconds}`, date: calendarDate, riddleNumber: riddleNumber, country: country_name});
 
@@ -160,7 +137,7 @@ const checkAnswer = useCallback((event) => {
   setCurrentPrompt('Keep Guessing!');
   setInputValue("");
 
-  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds,  setGuess, clearAll, country_name, setCorrect]);
+  }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds,  setGuess, country_name, setCorrect]);
 
   // Function so that when the enter key is pressed, the answer is submitted
 useEffect(() => {
