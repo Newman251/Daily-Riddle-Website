@@ -57,8 +57,6 @@ const App = () =>
 
         if (timeLeft === 0) {
             clearInterval(intervalId);
-            setGuess(1);
-            localStorage.setItem("guessCount", 1);
         }
 
         return () => clearInterval(intervalId);
@@ -71,10 +69,7 @@ const App = () =>
     }, [timeLeft, hoursLeft, minutesLeft, secondsLeft]);
 
     const [currentRiddle, setCurrentRiddle] = useState('Loading Riddle...');
-    // const [currentAnswer, setCurrentAnswer] = useState(' ');
-    // Make currentAnswer a public variable so that it can be accessed by the leaderboard
-    var [currentAnswer, setCurrentAnswer] = useState(' ');
-
+    const [currentAnswer, setCurrentAnswer] = useState(' ');
 
 //  Read from the riddles collection and get the answer and riddle of riddle 'Number' 1
     const getRiddle = useCallback(async () => {
@@ -125,10 +120,6 @@ const checkAnswer = useCallback((event) => {
     // Store local storage is correct as true
     setCorrect(1);
     localStorage.setItem("isCorrect", 1);
-
-    // Set Guess Count to 1
-    setGuess(1);
-    localStorage.setItem("guessCount", 1);
 
   } else {
     setGuess(guess + 1);

@@ -105,8 +105,6 @@ const findAll = React.useCallback(async () => {
   setLoading(false);
 }, [answer]);
 
-// Call findAll when the component mounts
-
 
 useEffect(() => {
   findAll();
@@ -114,7 +112,7 @@ useEffect(() => {
   // const interval = setInterval(() => {
   //   findAll();
   // }
-  // , 5000);
+  // , 25000);
   // return () => clearInterval(interval);
 }, [setLoading, findAll]);
 

@@ -30,15 +30,11 @@ const handleChange = (e) => {
 
   useEffect(() => {
     const checkSize = async () => {
+      console.log(answer);
       const docRefs = await getDocs(collection(getDb(), "leaderboard"));
-      // Check if there are less than 5 entries in the leaderboard collection for the answer
-      // First check if the answer is in the collection
-      const answerExists = docRefs.docs.some(doc => doc.data().answer === answer);
-      if (answerExists) {
-        const answerDocs = docRefs.docs.filter(doc => doc.data().answer === answer);
-        if (answerDocs.length < 5) {
-          setShowPrompt(true);
-        }
+      const answerDocs = docRefs.docs.filter(doc => doc.data().answer === answer);
+      if (answerDocs.length < 5) {
+        setShowPrompt(true);
       }
     };
     checkSize();
