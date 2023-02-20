@@ -7,7 +7,7 @@ const Top = ({ time, answer }) => {
   
   // Styled h1 to change the font size
   const StyledH1 = styled.h1`
-  font-size: 0.9em;
+  font-size: 0.7em;
   text-align: center;
   color: #36454f;
   `;

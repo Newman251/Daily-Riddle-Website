@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 // Stype the p tag to make it thicker
 const StyledP = styled.p`
-font-size: 1em;
+font-size: 1.3em;
 color: #36454f;
 border-radius: 2px;
 margin: 1em 1em;
