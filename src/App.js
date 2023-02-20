@@ -152,18 +152,6 @@ useEffect(() => {
   }
 }, [date, calendarDate]);
 
-      // Style submit button to be red curve the edges
-const Submit = styled.button`
-padding: 0.8em 2.5em;
-border-radius: 8px;
-background: #36454f;
-margin: 0em;
-font-size: 1.5em;
-text-align: center;
-color: white;
-cursor: pointer;
-`;
-
 // Styple the timer to be fancier make it bold
 const Timer = styled.p`
   font-family: "museo", Helvetica Neue, Helvetica, sans-serif;  
@@ -223,7 +211,17 @@ const URLStyle = styled.h1`
           background: 'papayawhip',
           border: '2px solid black',
           borderRadius: '20px'
-        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>{currentPrompt}</Timer></>) : <><Top time={timeLeft} answer={currentAnswer}/><Correct answer = {currentAnswer}/></> }
+        }} /></p><button onClick={checkAnswer}
+        style={{
+          padding: '0.8em 2.5em',
+          borderRadius: '8px',
+          background: '#36454f',
+          margin: '0em',
+          fontSize: '1.5em',
+          textAlign: 'center',
+          color: 'white'
+        }}
+        >Check</button></><Timer>{currentPrompt}</Timer></>) : <><Top time={timeLeft} answer={currentAnswer}/><Correct answer = {currentAnswer}/></> }
     </div>
   );
 }

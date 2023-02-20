@@ -7,7 +7,7 @@ const Top = ({ time, answer }) => {
   
   // Styled h1 to change the font size
   const StyledH1 = styled.h1`
-  font-size: 0.7em;
+  font-size: 0.6em;
   text-align: center;
   color: #36454f;
   `;
@@ -63,7 +63,7 @@ const handleChange = (e) => {
             padding: '6em',
           }
         }>
-          <StyledH1>Congrats! You are a top 5 riddler today, enter your name to feature on the leaderboard!</StyledH1>
+          <StyledH1>Congrats! You are a top 5 riddler today, enter your name to feature on the leaderboard! - Might take a minute for it to update</StyledH1>
           <p>
             <input
               type="text"

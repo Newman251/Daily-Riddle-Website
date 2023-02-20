@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 // Stype the p tag to make it thicker
 const StyledP = styled.p`
-font-size: 1.3em;
+font-size: 1.1em;
 color: #36454f;
 border-radius: 2px;
 margin: 1em 1em;
@@ -15,14 +15,14 @@ font-family: 'Courier New', Courier, monospace;
 `;
 
 
-// Change Stled H1 to styled p, make the font family like a game
+// Change Stled H1 to styled p, underlining the text
 const StyledH1 = styled.p`
-font-size: 1.5em;
+font-size: 1em;
 color: #36454f;
 border-radius: 10px;
 margin: 1.6em 0em;
-font-weight: 100;
-font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+font-weight: 1000;
+text-decoration: underline;
 `;
 
 function LeaderboardList({answer}) {
@@ -109,17 +109,17 @@ const findAll = React.useCallback(async () => {
 useEffect(() => {
   findAll();
   // Refresh the leaderboard every 5 seconds
-  // const interval = setInterval(() => {
-  //   findAll();
-  // }
-  // , 25000);
-  // return () => clearInterval(interval);
+  const interval = setInterval(() => {
+    findAll();
+  }
+  , 25000);
+  return () => clearInterval(interval);
 }, [setLoading, findAll]);
 
 
   return (
     <div>
-      <><StyledH1>Top Wriddlers:</StyledH1><p>
+      <><StyledH1>Top Wriddlers</StyledH1><p>
           </p></>
         {loading && 
               <StyledP>

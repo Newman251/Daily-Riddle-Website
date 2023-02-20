@@ -10,13 +10,6 @@ const Leaderboard = ({answer}) => {
     setShowLeaderboards(!showLeaderboards);
   };
 
-// Style the Icon
-const StyledIcon = styled(Icon)`
-font-size: 2em;
-background-color: transparent;
-color: #36454f;
-`;
-
 // Leaderboard button on the left side of the screen, inline with the menu button
 const LeaderboardButton = styled.button`
 display: inline-block;
@@ -31,7 +24,13 @@ right: 77%;
   return (
     <div>
       <LeaderboardButton onClick={handleClick}>
-        <StyledIcon icon="ic:round-leaderboard" />
+        <Icon icon="ic:round-leaderboard" 
+        style={{
+          fontSize: '2em',
+          backgroundColor: 'transparent',
+          color: '#36454f'
+        }}
+        />
       </LeaderboardButton>
       {showLeaderboards && (
         <div
