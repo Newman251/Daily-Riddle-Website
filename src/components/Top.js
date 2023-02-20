@@ -7,7 +7,7 @@ const Top = ({ time, answer }) => {
   
   // Styled h1 to change the font size
   const StyledH1 = styled.h1`
-  font-size: 0.75em;
+  font-size: 0.9em;
   text-align: center;
   color: #36454f;
   `;
@@ -78,7 +78,6 @@ const handleChange = (e) => {
                 width: '60%',
                 height: '1.2em',
                 padding: '1.1em',
-                margin: '0.75em',
                 color: 'Black',
                 fontSize: '1.1em',
                 background: 'White',

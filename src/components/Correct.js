@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Leaderboard from './Leaderboard';
+import LeaderboardList from './LeaderboardList';
 
-const Correct = () => {
+const Correct = ({answer}) => {
 
   const currentDate = new Date(new Date().toLocaleString('en', {timeZone: 'Europe/London'}));
   const currentDay = currentDate.getDay() + 28;
@@ -17,7 +17,7 @@ const Correct = () => {
       .catch((error) => console.log('Error sharing:', error));
   };
 
-  const StyledButton = styled.button`
+const StyledButton = styled.button`
 background-color: #4CAF50;
 border: none;
 color: white;
@@ -40,7 +40,7 @@ color: #36454f;
     <div>
       <Title>You got it!!</Title>
       <StyledButton onClick={shareLink}>Share the riddle!</StyledButton>
-      <Leaderboard />
+      <LeaderboardList answer = {answer} />
     </div>
   );
 };

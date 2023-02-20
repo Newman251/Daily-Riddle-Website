@@ -71,7 +71,9 @@ const App = () =>
     }, [timeLeft, hoursLeft, minutesLeft, secondsLeft]);
 
     const [currentRiddle, setCurrentRiddle] = useState('Loading Riddle...');
-    const [currentAnswer, setCurrentAnswer] = useState(' ');
+    // const [currentAnswer, setCurrentAnswer] = useState(' ');
+    // Make currentAnswer a public variable so that it can be accessed by the leaderboard
+    var [currentAnswer, setCurrentAnswer] = useState(' ');
 
 
 //  Read from the riddles collection and get the answer and riddle of riddle 'Number' 1
@@ -211,7 +213,7 @@ const URLStyle = styled.h1`
     // and a button which you click to submit the text box contents
     // Add a text box above the button
     <div className="App">
-      <Buttons />
+      <Buttons answer={currentAnswer}/>
       <SetLogo />
       <URLStyle>wriddle.net</URLStyle>
       <Timer>Time until next riddle: {hours}:{minutes}:{seconds}</Timer>
@@ -230,7 +232,7 @@ const URLStyle = styled.h1`
           background: 'papayawhip',
           border: '2px solid black',
           borderRadius: '20px'
-        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>{currentPrompt}</Timer></>) : <><Top time={timeLeft} answer={currentAnswer}/><Correct /></> }
+        }} /></p><Submit onClick={checkAnswer}>Check</Submit></><Timer>{currentPrompt}</Timer></>) : <><Top time={timeLeft} answer={currentAnswer}/><Correct answer = {currentAnswer}/></> }
     </div>
   );
 }

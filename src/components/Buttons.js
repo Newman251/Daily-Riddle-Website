@@ -1,7 +1,7 @@
 import React from 'react';
 // import menuRounded from '@iconify/icons-material-symbols/menu-rounded';
 import styled from 'styled-components';
-import Leaderboard from './Leaderboard';
+import Leaderboard from './Leaderboard.js';
 import Menu from './Menu.js';
 
 
@@ -12,12 +12,12 @@ const Row = styled.div`
 `;
 
 
-function SetLogo() {
+function SetLogo({answer}) {
 
   return (
     <div>
         <Row>
-            <Leaderboard />
+          <Leaderboard answer={answer} />
             <Menu />
         </Row>
     </div>
