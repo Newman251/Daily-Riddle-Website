@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { getDb } from "../services/db.mjs";
+import Correct from "./Correct.js";
 
 const Top = ({ time, answer }) => {
   
@@ -43,7 +44,7 @@ const handleChange = (e) => {
 
   return (
     <div>
-      {showPrompt && (
+      {showPrompt ? (
         <div 
         style={
           {
@@ -63,7 +64,7 @@ const handleChange = (e) => {
             padding: '6em',
           }
         }>
-          <StyledH1>Congrats! You are a top 5 riddler today, enter your name to feature on the leaderboard! - Might take a minute for it to update</StyledH1>
+          <StyledH1>You are a top 5 riddler today! Enter your name to feature on the leaderboard!</StyledH1>
           <p>
             <input
               type="text"
@@ -94,7 +95,7 @@ const handleChange = (e) => {
           }}
           >Close</button>
         </div>
-      )}
+      ) : ( <Correct answer={answer} /> )}
     </div>
   )
 }

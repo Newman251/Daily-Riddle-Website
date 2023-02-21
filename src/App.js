@@ -1,7 +1,6 @@
 import './App.css';
 import styled from 'styled-components';
 import React, { useState, useEffect, useCallback } from 'react';
-import Correct from './components/Correct';
 import { collection, addDoc, getDocs} from "firebase/firestore";
 import { getDb } from "./services/db.mjs"
 import axios from 'axios';
@@ -221,7 +220,7 @@ const URLStyle = styled.h1`
           textAlign: 'center',
           color: 'white'
         }}
-        >Check</button></><Timer>{currentPrompt}</Timer></>) : <><Top time={timeLeft} answer={currentAnswer}/><Correct answer = {currentAnswer}/></> }
+        >Check</button></><Timer>{currentPrompt}</Timer></>) : <><Top time={timeLeft} answer={currentAnswer}/></> }
     </div>
   );
 }
