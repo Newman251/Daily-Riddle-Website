@@ -17,6 +17,12 @@ const Correct = ({answer}) => {
       .catch((error) => console.log('Error sharing:', error));
   };
 
+const Title = styled.h1`
+font-size: 1.5em;
+text-align: center;
+color: #36454f;
+`;
+
 const StyledButton = styled.button`
 background-color: #4CAF50;
 border: none;
@@ -30,16 +36,22 @@ margin: 4px 2px;
 cursor: pointer;
 `;
 
-const Title = styled.h1`
-font-size: 1.5em;
-text-align: center;
-color: #36454f;
-`;
-
   return (
     <div>
       <Title>You got it!!</Title>
-      <StyledButton onClick={shareLink}>Share the riddle!</StyledButton>
+      <button onClick={shareLink}
+      style ={{
+        background: '#4CAF50',
+        border: 'none',
+        color: 'white',
+        padding: '15px 32px',
+        textAlign: 'center',
+        textDecoration: 'none',
+        display: 'inline-block',
+        fontSize: '16px',
+        margin: '4px 2px',
+        cursor: 'pointer'
+      }}>Share the riddle!</button>
       <LeaderboardList answer = {answer} />
     </div>
   );

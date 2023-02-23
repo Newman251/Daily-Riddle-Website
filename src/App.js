@@ -57,7 +57,6 @@ const App = () =>
         if (timeLeft === 0) {
             clearInterval(intervalId);
         }
-
         return () => clearInterval(intervalId);
     }, [timeLeft]);
 
