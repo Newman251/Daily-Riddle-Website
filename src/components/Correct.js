@@ -5,7 +5,7 @@ import LeaderboardList from './LeaderboardList';
 const Correct = ({answer}) => {
 
   const currentDate = new Date(new Date().toLocaleString('en', {timeZone: 'Europe/London'}));
-  const currentDay = currentDate.getDay() + 28;
+  const currentDay = currentDate.getDay() + 35;
 
   const shareLink = () => {
     navigator.share({
