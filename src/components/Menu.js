@@ -12,8 +12,8 @@ const DropdownContainer = styled.div`
 
 const DropdownButton = styled.button`
   display: inline-block;
-  margin-left: 11em;
-  margin-top: 0.5em;
+  margin-left: 10em;
+  margin-top: 0.7em;
   size: 100%;
   background-color: transparent;
   border: 1px solid transparent;
