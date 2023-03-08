@@ -7,7 +7,7 @@ import WriddleLogo from './wriddleLogo.PNG';
 const StyledImage = styled.img`
 display: center;
 margin-top: 0em;
-width: 100%;
+width: 50%;
 height: 240%;
 
 `;
