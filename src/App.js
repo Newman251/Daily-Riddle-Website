@@ -48,6 +48,8 @@ const App = () =>
     const seconds = timeLeft % 60 < 10 ? `0${timeLeft % 60}` : timeLeft % 60;
     const minutes = Math.floor(timeLeft / 60) % 60 < 10 ? `0${Math.floor(timeLeft / 60) % 60}` : Math.floor(timeLeft / 60) % 60;
     const hours = Math.floor(timeLeft / 60 / 60) < 10 ? `0${Math.floor(timeLeft / 60 / 60)}` : Math.floor(timeLeft / 60 / 60);
+    const [isShaking, setIsShaking] = useState(false);
+    const inputClassName = isShaking ? 'input-box shake' : 'input-box'; // set class name based on the shaking state
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -85,10 +87,8 @@ const App = () =>
       getRiddle();
     }, [getRiddle]);
 
-
-
 const handleChange = (event) => {
-setInputValue(event.target.value);
+  setInputValue(event.target.value);
 }
     
 //creating function to load ip address from the API
@@ -106,6 +106,9 @@ useEffect(()=>{
 },[])
 
 const checkAnswer = useCallback((event) => {
+
+  setIsShaking(true);
+
   event.preventDefault();
 
   // Search the entire input string to see if the answer is contained anywhere within it
@@ -127,6 +130,11 @@ const checkAnswer = useCallback((event) => {
 
   setCurrentPrompt('Keep Guessing!');
   setInputValue("");
+
+  // Wait 1 second before removing the shaking class
+  setTimeout(() => {
+    setIsShaking(false);
+  }, 750);
 
   }, [inputValue, currentAnswer, myip, mycity, guess, riddleNumber, calendarDate, hours, minutes, seconds,  setGuess, country_name, setCorrect]);
 
@@ -197,6 +205,7 @@ const URLStyle = styled.h1`
         {!isCorrect ? ( <><><Text id="text"><Italics>{currentRiddle}</Italics></Text><p><input
         type="text"
         value={inputValue}
+        className={inputClassName}
         onChange={handleChange}
         placeholder="Enter your answer here"
         style={{
